@@ -21,6 +21,12 @@ app.get("/user", (req: Request, res: Response) => {
     });
 });
 
+app.get("/user/add", (req: Request, res: Response) => {
+    res.json({
+        Message: "This is add user",
+    });
+});
+
 app.listen(process.env.HOST_PORT, () => {
     console.log(`Running on http://localhost:${process.env.HOST_PORT}`);
 });
