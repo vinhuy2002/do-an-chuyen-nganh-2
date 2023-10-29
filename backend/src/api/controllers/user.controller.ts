@@ -1,13 +1,15 @@
-import {addUser, delelteUser} from "../services/user.service";
+import { delelteUser} from "../services/user.service";
 import { Request, Response } from "express";
-export const addUserController = async(req: Request, res: Response) => {
-    res.json({
-        "Message": addUser()
-    })
-}
+import { Login, User } from "../interfaces/user.interface";
+import { genAccessToken, genRefreshToken } from "../utils/jwttoken";
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+const dayjs = require("dayjs");
 
 export const deleteUserController = async(req: Request, res: Response) => {
+    const userId: any = req.params.userId;
+    const result = await delelteUser(parseInt(userId));
     res.json({
-        "Message": delelteUser()
+        "Message": result
     })
 }

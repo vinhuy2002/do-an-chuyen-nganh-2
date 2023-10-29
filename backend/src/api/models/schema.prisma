@@ -13,8 +13,8 @@ datasource db {
 model User {
     id Int @id @default(autoincrement())
     username String @db.VarChar(25)
-    password String @db.VarChar(25)
+    password String
     email String
     phoneNumber String
-    dateOfBirth DateTime
+    dateOfBirth DateTime @db.Date
 }

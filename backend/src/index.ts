@@ -1,43 +1,20 @@
-import express, {Request, Response} from "express";
-import { createClient } from "redis";
-import userRoute from "./api/routes/user.route"
+import express from "express";
+import helmet from "helmet";
+import bodyParser from "body-parser";
+const cors = require("cors");
+// import { createClient } from "redis";
+// const client = createClient();
+import userRoute from "./api/routes/user.route";
+import authRoute from "./api/routes/auth.route";
 const app = express();
-const client = createClient();
+
 require("dotenv").config();
-// const functRedis = async () => {
-//     client.on('error', err => console.log('Redis Client Error', err));
-//     await client.connect();
-//     await client.set('a1', 'vinhuy');
-//     const value = await client.get('a1');
-//     console.log(value);
-// }
-// functRedis();
-// app.get("/", (req: Request, res: Response) => {
-//     res.json({
-//         Message: "Hello World",
-//     });
-// });
 
-// app.get("/:id", (req: Request, res: Response) => {
-//     const id = req.params.id
-//     res.json({
-//         Message: "Hello user " + id,
-//     });
-// });
-
-// app.get("/user", (req: Request, res: Response) => {
-//     res.json({
-//         Message: "This is a user page",
-//     });
-// });
-
-// app.get("/user/add", (req: Request, res: Response) => {
-//     res.json({
-//         Message: "This is add user",
-//     });
-// });
-
-app.use("/api/v1/user", userRoute);
+app.use(cors());
+app.use(helmet());
+app.use(bodyParser.json());
+app.use("/api/user", userRoute);
+app.use("/api/auth", authRoute);
 
 app.listen(process.env.HOST_PORT, () => {
     console.log(`Running on http://localhost:${process.env.HOST_PORT}`);

@@ -11,9 +11,16 @@
 npm install
 ```
 3. Copy thêm 1 file `.env.example` và đổi tên thành `.env`
-4. Ở trong file `.env`, chỉnh sửa username, password, PORT (nếu có thay đổi), và database name
+4. Ở trong file `.env`, chỉnh sửa các thông tin
 ```
 DATABASE_URL = "mysql://username:password@localhost:3306/mydb"
+ACCESS_TOKEN_SECRET =
+REFRESH_TOKEN_SECRET = 
+```
+Lưu ý đối với `ACCESS_TOKEN_SECRET` và `REFRESH_TOKEN_SECRET`, phải tạo một dãy chuỗi trong terminal bằng lệnh
+```
+nodejs
+require('crypto').randomBytes(64).toString('hex')
 ```
 5. Chạy lệnh terminal
 ```
