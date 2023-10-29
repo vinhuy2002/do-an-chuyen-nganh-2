@@ -1,10 +1,7 @@
 import { Request, Response, NextFunction } from "express";
+import { CustomeRefreshToken } from "../interfaces/interface";
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-
-interface CustomRequest extends Request {
-    token: string,
-}
 
 export const checkAccessToken = async(req: Request, res: Response, next: NextFunction)=>{
     try {
@@ -13,6 +10,7 @@ export const checkAccessToken = async(req: Request, res: Response, next: NextFun
         const validToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         if (validToken) {
             // req.token = validToken;
+            console.log(validToken);
             return next();
         }
     } catch (error) {
@@ -23,8 +21,9 @@ export const checkAccessToken = async(req: Request, res: Response, next: NextFun
 export const checkRefreshToken = async(req: Request, res: Response, next: NextFunction)=>{
     try {
         const refreshToken = req.body.refreshToken;
-        const validToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+        const validToken = await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
         if (validToken) {
+            req.body.refreshToken = validToken;
             return next();
         }
     } catch (error) {

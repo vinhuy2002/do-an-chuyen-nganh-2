@@ -11,3 +11,8 @@ export interface Login {
     username: string,
     password: string,
 }
+
+export interface genTokenInfo {
+    id: number,
+    username: string
+}

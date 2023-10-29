@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { Login, User } from "../interfaces/user.interface";
 const prisma = new PrismaClient();
+import { createClient } from "redis";
+const client = createClient();
 
 export const authLogin = async(userInfo: Login) => {
     try {
@@ -29,5 +31,13 @@ export const authRegister = async(user: User) => {
         return createUser;
     } catch (error) {
         console.log(error);
+    }
+}
+
+export const authLogout = async() => {
+    try {
+        
+    } catch (error) {
+        
     }
 }

@@ -1,24 +1,22 @@
-import { User } from "../interfaces/user.interface";
+import { User, genTokenInfo } from "../interfaces/user.interface";
 
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-export const genAccessToken = async(userInfo: User) => {
+export const genAccessToken = async(userInfo: genTokenInfo) => {
     const accessToken = await jwt.sign({
         userid: userInfo.id,
         username: userInfo.username,
-        birthday: userInfo.dateOfBirth
     },
     process.env.ACCESS_TOKEN_SECRET,
-    {expiresIn: "30s"});
+    {expiresIn: "30m"});
     return accessToken;
 }
 
-export const genRefreshToken = async(userInfo: User) => {
+export const genRefreshToken = async(userInfo: genTokenInfo) => {
     const refreshToken = await jwt.sign({
         userid: userInfo.id,
         username: userInfo.username,
-        birthday: userInfo.dateOfBirth
     },
     process.env.REFRESH_TOKEN_SECRET,
     {expiresIn: "1h"});

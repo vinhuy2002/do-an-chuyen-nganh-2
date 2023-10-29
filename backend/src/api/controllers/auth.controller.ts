@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { Login, User } from "../interfaces/user.interface";
+import { Login, User, genTokenInfo } from "../interfaces/user.interface";
 import { authLogin, authRegister } from "../services/auth.service";
 import { genAccessToken, genRefreshToken } from "../utils/jwttoken";
+import { CustomeRefreshToken } from "../interfaces/interface";
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -23,8 +24,12 @@ export const authLoginController = async(req: Request, res: Response) => {
         }
         const checkUser = await authLogin(userLogin);
         if (checkUser && (await comparePassword(userLogin.password, checkUser.password) === true)) {
-            const accessToken = await genAccessToken(checkUser);
-            const refreshToken = await genRefreshToken(checkUser);
+            const userInfo: genTokenInfo = {
+                id: checkUser.id,
+                username: checkUser.username
+            }
+            const accessToken = await genAccessToken(userInfo);
+            const refreshToken = await genRefreshToken(userInfo);
             res.json({
                 AccessToken: accessToken,
                 RefreshToken: refreshToken
@@ -59,9 +64,26 @@ export const authRegisterController = async(req: Request, res: Response) => {
 }
 
 export const authLogoutController = async(req: Request, res: Response) => {
-
+    try {
+        const refreshToken = req.body.refreshToken;
+        
+    } catch (error) {
+        
+    }
 }
 
 export const authRefreshController = async(req: Request, res: Response) => {
-
+    try {
+        const data = req.body.refreshToken;
+        const userInfo: genTokenInfo = {
+            id: data.userid,
+            username: data.username,
+        }
+        const newAccessToken = await genAccessToken(userInfo);
+        res.json({
+            "AccessToken": newAccessToken,
+        })
+    } catch (error) {
+        
+    }
 }
