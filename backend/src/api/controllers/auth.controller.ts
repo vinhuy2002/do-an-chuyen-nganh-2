@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Login, User, genTokenInfo } from "../interfaces/user.interface";
-import { authLogin, authRegister } from "../services/auth.service";
+import { authLogin, authLogout, authRegister } from "../services/auth.service";
 import { genAccessToken, genRefreshToken } from "../utils/jwttoken";
 import { CustomeRefreshToken } from "../interfaces/interface";
 const bcrypt = require("bcrypt");
@@ -66,7 +66,10 @@ export const authRegisterController = async(req: Request, res: Response) => {
 export const authLogoutController = async(req: Request, res: Response) => {
     try {
         const refreshToken = req.body.refreshToken;
-        
+        await authLogout(refreshToken);
+        res.json({
+            Message: "Đăng xuất thành công!"
+        });
     } catch (error) {
         
     }

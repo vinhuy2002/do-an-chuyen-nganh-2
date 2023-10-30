@@ -2,8 +2,6 @@ import express from "express";
 import helmet from "helmet";
 import bodyParser from "body-parser";
 const cors = require("cors");
-// import { createClient } from "redis";
-// const client = createClient();
 import userRoute from "./api/routes/user.route";
 import authRoute from "./api/routes/auth.route";
 const app = express();

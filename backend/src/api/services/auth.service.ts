@@ -3,7 +3,7 @@ import { Login, User } from "../interfaces/user.interface";
 const prisma = new PrismaClient();
 import { createClient } from "redis";
 const client = createClient();
-
+client.connect();
 export const authLogin = async(userInfo: Login) => {
     try {
         const checkUser = await prisma.user.findFirst({
@@ -34,9 +34,12 @@ export const authRegister = async(user: User) => {
     }
 }
 
-export const authLogout = async() => {
+export const authLogout = async(token: any) => {
     try {
-        
+        const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+        await client.set(`bl_${token}`, token, {
+            EXAT: payload.exp
+        });
     } catch (error) {
         
     }
