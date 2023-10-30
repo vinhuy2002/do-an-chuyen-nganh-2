@@ -19,7 +19,7 @@ REFRESH_TOKEN_SECRET =
 ```
 Lưu ý đối với `ACCESS_TOKEN_SECRET` và `REFRESH_TOKEN_SECRET`, phải tạo một dãy chuỗi trong terminal bằng lệnh
 ```
-nodejs
+node
 require('crypto').randomBytes(64).toString('hex')
 ```
 5. Chạy lệnh terminal

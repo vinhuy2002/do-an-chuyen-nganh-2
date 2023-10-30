@@ -44,3 +44,16 @@ export const authLogout = async(token: any) => {
         
     }
 }
+
+export const authResetPassword = async(email: string) => {
+    try {
+        const checkUser = await prisma.user.findFirst({
+            where: {
+                email: email
+            }
+        });
+        return checkUser;
+    } catch (error) {
+        
+    }
+}

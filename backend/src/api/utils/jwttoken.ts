@@ -1,3 +1,4 @@
+import { ResetEmail } from "../interfaces/interface";
 import { User, genTokenInfo } from "../interfaces/user.interface";
 
 const jwt = require("jsonwebtoken");
@@ -21,4 +22,13 @@ export const genRefreshToken = async(userInfo: genTokenInfo) => {
     process.env.REFRESH_TOKEN_SECRET,
     {expiresIn: "1h"});
     return refreshToken;
+}
+
+export const genResetToken = async(userInfo: ResetEmail) => {
+    const resetToken = await jwt.sign({
+        email: userInfo.email
+    },
+    process.env.RESET_TOKEN_SECRET,
+    {expiresIn: "30m"});
+    return resetToken;
 }
