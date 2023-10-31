@@ -50,11 +50,12 @@ export const authLoginController = async(req: Request, res: Response) => {
 export const authRegisterController = async(req: Request, res: Response) => {
     try {
         const user: User = {
+            name: req.body.name,
             username: req.body.username,
             password: await hashPassowrd(req.body.password),
             email: req.body.email,
-            phoneNumber: req.body.phoneNumber,
-            dateOfBirth: new Date(req.body.dateOfBirth)
+            phone_number: req.body.phone_number,
+            created_time: new Date()
         }
         const result = await authRegister(user);
         res.json({
@@ -97,7 +98,7 @@ export const authResetPasswordController = async(req: Request, res: Response) =>
     try {
         const pass = req.body.pass;
         const repass = req.body.repass;
-        if (pass === repass) {
+        if ((pass === repass) && (pass != null || pass != undefined)) {
             res.json({
                 Message: "Đổi Thành công"
             });
@@ -132,7 +133,8 @@ export const authSendEmailController = async(req: Request, res: Response) => {
                 <h5>Xin chào bạn, ${req.body.email}</h5>
                 <p>Chúng tôi thấy bạn đang cố đổi mật khẩu!</p>
                 <p><b>Nếu bạn không phải là người thực hiện điều này thì bạn có thể bỏ qua.</b> Xin cảm ơn!</p>
-                <p>Link: <a href="/">${link}</a></p>
+                <p>-------------------------------</p>
+                <a href="${link}">${link}</a>
             `
         };
         await transport.sendMail(mailOption);

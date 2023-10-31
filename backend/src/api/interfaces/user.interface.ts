@@ -1,10 +1,11 @@
 export interface User{
-    id?: number
+    id?: number,
+    name: string,
     username: string,
     password: string,
     email: string,
-    phoneNumber: string,
-    dateOfBirth: Date
+    phone_number: string,
+    created_time: Date
 }
 
 export interface Login {

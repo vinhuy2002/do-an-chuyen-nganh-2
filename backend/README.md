@@ -4,6 +4,7 @@
 - [WSL - Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install)
 - [MySQL](https://dev.mysql.com/downloads/mysql/) - Có thể dùng XAMPP để thay thế
 - [Redis - REmote DIctionary Server](https://redis.io/docs/install/install-redis/install-redis-on-windows/) - Cần tải WSL trước khi cài đặt
+
 ### Hướng dẫn sử dụng
 1. Pull project về máy
 2. Chạy lệnh

@@ -21,11 +21,12 @@ export const authRegister = async(user: User) => {
     try {
         const createUser = await prisma.user.create({
             data: {
+                name: user.name,
                 username: user.username,
                 password: user.password,
                 email: user.email,
-                phoneNumber: user.phoneNumber,
-                dateOfBirth: user.dateOfBirth
+                phone_number: user.phone_number,
+                created_time: user.created_time
             }
         });
         return createUser;

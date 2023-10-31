@@ -29,6 +29,6 @@ export const genResetToken = async(userInfo: ResetEmail) => {
         email: userInfo.email
     },
     process.env.RESET_TOKEN_SECRET,
-    {expiresIn: "30m"});
+    {expiresIn: "15m"});
     return resetToken;
 }

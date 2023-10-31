@@ -11,10 +11,78 @@ datasource db {
 }
 
 model User {
-    id Int @id @default(autoincrement())
-    username String @db.VarChar(25)
-    password String
-    email String
-    phoneNumber String
-    dateOfBirth DateTime @db.Date
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(50)
+  username       String           @unique @db.VarChar(50)
+  password       String
+  email          String           @unique @db.VarChar(100)
+  phone_number   String
+  created_time   DateTime         @db.DateTime()
+  additionalInfo Additional_Info?
+  recipe         Recipe[]
+}
+
+model Additional_Info {
+  id           Int       @id @default(autoincrement())
+  user_id      Int       @unique
+  seller       Int?      @db.TinyInt()
+  profile_img  String?
+  home_address String?
+  birthday     DateTime? @db.Date
+  user         User      @relation(fields: [user_id], references: [id])
+}
+
+model Items {
+  id          Int       @id @default(autoincrement())
+  category_id Int
+  item_name   String
+  description String
+  price       Decimal
+  quantity    Int
+  option      String?
+  images      Images[]
+  comment     Comment[]
+  cart        Cart[]
+  category    Category  @relation(fields: [category_id], references: [id])
+}
+
+model Images {
+  id         Int    @id @default(autoincrement())
+  item_id    Int
+  image_name String
+  items      Items  @relation(fields: [item_id], references: [id])
+}
+
+model Category {
+  id            Int     @id @default(autoincrement())
+  category_name String
+  description   String
+  items         Items[]
+}
+
+model Comment {
+  id      Int    @id @default(autoincrement())
+  item_id Int
+  user_id Int
+  comment String
+  items   Items  @relation(fields: [item_id], references: [id])
+}
+
+model Recipe {
+  id            Int      @id @default(autoincrement())
+  user_id       Int
+  total_price   Decimal
+  created_time  DateTime @db.Date
+  finished_time DateTime @db.Date
+  user          User     @relation(fields: [user_id], references: [id])
+  cart          Cart[]
+}
+
+model Cart {
+  id        Int    @id @default(autoincrement())
+  recipe_id Int
+  item_id   Int
+  quantity  Int
+  recipe    Recipe @relation(fields: [recipe_id], references: [id])
+  items     Items  @relation(fields: [item_id], references: [id])
 }
