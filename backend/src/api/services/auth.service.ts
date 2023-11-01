@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { Login, User } from "../interfaces/user.interface";
 const prisma = new PrismaClient();
 import { createClient } from "redis";
+import { UpdatePassword } from "../interfaces/interface";
 const client = createClient();
 client.connect();
 export const authLogin = async(userInfo: Login) => {
@@ -46,7 +47,7 @@ export const authLogout = async(token: any) => {
     }
 }
 
-export const authResetPassword = async(email: string) => {
+export const authCheckMail = async(email: string) => {
     try {
         const checkUser = await prisma.user.findFirst({
             where: {
@@ -54,6 +55,22 @@ export const authResetPassword = async(email: string) => {
             }
         });
         return checkUser;
+    } catch (error) {
+        
+    }
+}
+
+export const authUpdatePassword = async(update: UpdatePassword) => {
+    try {
+        const updatePass = await prisma.user.update({
+            where: {
+                email: update.email
+            },
+            data: {
+                password: update.password
+            }
+        });
+        return updatePass;
     } catch (error) {
         
     }
