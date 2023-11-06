@@ -26,6 +26,7 @@ require('crypto').randomBytes(64).toString('hex')
 5. Chạy lệnh terminal
 ```
 npx prisma migrate dev --name init
+npx prisma generate
 ```
 6. Và chạy trên API trên localhost
 ```

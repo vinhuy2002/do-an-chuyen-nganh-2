@@ -8,6 +8,7 @@ import nodemailer from "nodemailer";
 import { ResetEmail, UpdatePassword } from "../interfaces/interface";
 require("dotenv").config();
 
+
 const hashPassowrd = async (password: string) => {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);

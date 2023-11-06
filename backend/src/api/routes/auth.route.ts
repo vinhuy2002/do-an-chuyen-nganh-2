@@ -10,4 +10,5 @@ route.post('/logout', authLogoutController);
 route.post('/refresh', checkRefTokenBlacklist ,checkRefreshToken, authRefreshController);
 route.post('/reset-password/:token', checkResetToken, authResetPasswordCheckController);
 route.post('/send-email', authSendEmailController);
+
 export default route;

@@ -17,3 +17,11 @@ export interface genTokenInfo {
     id: number,
     username: string
 }
+
+export interface AdditionalInfo {
+    user_id: number,
+    seller?: number,
+    profile_img?: string,
+    home_address?: string,
+    birthday?: Date
+}

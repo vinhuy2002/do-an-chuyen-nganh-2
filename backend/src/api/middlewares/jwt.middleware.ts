@@ -9,6 +9,7 @@ export const checkAccessToken = async(req: Request, res: Response, next: NextFun
         const token = header?.split(" ")[1];
         const validToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         if (validToken) {
+            res.locals.validToken = validToken;
             return next();
         }
     } catch (error) {

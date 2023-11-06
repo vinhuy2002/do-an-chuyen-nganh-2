@@ -13,5 +13,6 @@ export const checkRefTokenBlacklist = async (req: Request, res: Response, next: 
             Message: "Token Không hợp lệ!"
         });
     } catch (error) {
+        res.send(error);
     }
 }

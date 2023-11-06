@@ -18,18 +18,19 @@ model User {
   email          String           @unique @db.VarChar(100)
   phone_number   String
   created_time   DateTime         @db.DateTime()
-  additionalInfo Additional_Info?
+  userProfile UserProfile?
   recipe         Recipe[]
 }
 
-model Additional_Info {
+model UserProfile {
   id           Int       @id @default(autoincrement())
+  user         User      @relation(fields: [user_id], references: [id])
   user_id      Int       @unique
   seller       Int?      @db.TinyInt()
   profile_img  String?
   home_address String?
   birthday     DateTime? @db.Date
-  user         User      @relation(fields: [user_id], references: [id])
+  
 }
 
 model Items {
