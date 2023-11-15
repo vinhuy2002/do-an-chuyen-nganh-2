@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Login, User } from "../interfaces/user.interface";
 import { AdditionalInfo } from "../interfaces/user.interface";
+
 const prisma = new PrismaClient();
 
 const checkUserId = async (userId: number) => {
@@ -67,7 +68,7 @@ export const getUser = async (userId: number) => {
                 name: true,
                 email: true,
                 phone_number: true,
-                "userProfile": {
+                userProfile: {
                     select: {
                         seller: true,
                         profile_img: true,

@@ -1,7 +1,6 @@
 import { AdditionalInfo } from "../interfaces/user.interface";
 import { delelteUser, getUser, updateInfoUser} from "../services/user.service";
 import { Request, Response } from "express";
-const dayjs = require("dayjs");
 
 export const getUserInfo = async (req: Request, res: Response) => {
     try {
