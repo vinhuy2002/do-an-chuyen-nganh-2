@@ -16,16 +16,19 @@ export const getUserInfo = async (req: Request, res: Response) => {
     }
 }
 
+
+
 export const updateUserAddtionalInfo = async (req: Request, res: Response) => {
     try {
         const token = res.locals.validToken;
         const additionalInfo: AdditionalInfo = {
             user_id: token.userid,
-            seller: req.body.seller,
-            profile_img: req.body.profile_img,
+            seller: parseInt(req.body.seller),
+            profile_img: req.file,
             home_address: req.body.home_address,
             birthday: new Date(req.body.birthday)
         }
+        console.log(additionalInfo);
         const updateInfo = await updateInfoUser(additionalInfo);
         res.send(updateInfo);
     } catch (error) {

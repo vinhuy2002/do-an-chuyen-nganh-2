@@ -28,7 +28,7 @@ require('crypto').randomBytes(64).toString('hex')
 npx prisma migrate dev --name init
 npx prisma generate
 ```
-6. Và chạy trên API trên localhost
+6. Và chạy API trên localhost
 ```
 npm run dev
 ```

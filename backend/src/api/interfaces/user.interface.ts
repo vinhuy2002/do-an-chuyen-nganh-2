@@ -1,4 +1,4 @@
-export interface User{
+export interface User {
     id?: number,
     name: string,
     username: string,
@@ -21,7 +21,16 @@ export interface genTokenInfo {
 export interface AdditionalInfo {
     user_id: number,
     seller?: number,
-    profile_img?: string,
+    profile_img?: ImgInfo,
     home_address?: string,
     birthday?: Date
+}
+
+export interface ImgInfo {
+    fieldname: string,
+    originalname: string,
+    encoding: string,
+    mimetype: string,
+    buffer: any,
+    size: number
 }
