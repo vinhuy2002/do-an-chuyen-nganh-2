@@ -32,7 +32,7 @@ export const authRegister = async(user: User) => {
         });
         return createUser;
     } catch (error) {
-        console.log(error);
+        return error;
     }
 }
 

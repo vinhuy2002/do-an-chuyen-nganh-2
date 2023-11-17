@@ -24,7 +24,7 @@ model User {
 
 model UserProfile {
   id           Int       @id @default(autoincrement())
-  user         User      @relation(fields: [user_id], references: [id])
+  user         User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   user_id      Int       @unique
   seller       Int?      @db.TinyInt()
   profile_img  String?
@@ -44,14 +44,14 @@ model Items {
   images      Images[]
   comment     Comment[]
   cart        Cart[]
-  category    Category  @relation(fields: [category_id], references: [id])
+  category    Category  @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Images {
   id         Int    @id @default(autoincrement())
   item_id    Int
   image_name String
-  items      Items  @relation(fields: [item_id], references: [id])
+  items      Items  @relation(fields: [item_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Category {
@@ -66,7 +66,7 @@ model Comment {
   item_id Int
   user_id Int
   comment String
-  items   Items  @relation(fields: [item_id], references: [id])
+  items   Items  @relation(fields: [item_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Recipe {
@@ -75,7 +75,7 @@ model Recipe {
   total_price   Decimal
   created_time  DateTime @db.Date
   finished_time DateTime @db.Date
-  user          User     @relation(fields: [user_id], references: [id])
+  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   cart          Cart[]
 }
 
@@ -84,6 +84,6 @@ model Cart {
   recipe_id Int
   item_id   Int
   quantity  Int
-  recipe    Recipe @relation(fields: [recipe_id], references: [id])
-  items     Items  @relation(fields: [item_id], references: [id])
+  recipe    Recipe @relation(fields: [recipe_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  items     Items  @relation(fields: [item_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

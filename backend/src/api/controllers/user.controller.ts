@@ -16,8 +16,6 @@ export const getUserInfo = async (req: Request, res: Response) => {
     }
 }
 
-
-
 export const updateUserAddtionalInfo = async (req: Request, res: Response) => {
     try {
         const token = res.locals.validToken;
@@ -37,9 +35,9 @@ export const updateUserAddtionalInfo = async (req: Request, res: Response) => {
 }
 
 export const deleteUserController = async(req: Request, res: Response) => {
-    const userId: any = req.params.userId;
-    const result = await delelteUser(parseInt(userId));
+    const token = res.locals.validToken;
+    const result = await delelteUser(parseInt(token.userid));
     res.json({
         Message: result
-    })
+    });
 }

@@ -13,6 +13,31 @@ const checkUserId = async (userId: number) => {
     });
 }
 
+const deleteImgFirebase = async (additionalInfo: AdditionalInfo) => {
+    try {
+        const imgName = await prisma.userProfile.findFirst({
+            where:{
+                id: additionalInfo.user_id
+            },
+            select: {
+                profile_img: true
+            }
+        });
+        if (!imgName?.profile_img){
+            return;
+        }
+        const file = firebase.file(imgName.profile_img);
+        const exists = await file.exists();
+        if (exists[0]) {
+            await file.delete();
+            return;
+        }
+        return;
+    } catch (error) {
+        
+    }
+}
+
 const addImgFirebase = (additionalInfo: AdditionalInfo) => {
     if (!additionalInfo.profile_img){
         return undefined;
@@ -65,7 +90,8 @@ export const updateInfoUser = async (additionalInfo: AdditionalInfo) => {
     try {
         const check = await checkUserId(additionalInfo.user_id);
         if (check != null) {
-            const imgName = addImgFirebase(additionalInfo);
+            await deleteImgFirebase(additionalInfo);
+            addImgFirebase(additionalInfo);
             const updateInfo = await prisma.userProfile.update({
                 where: {
                     user_id: additionalInfo.user_id
