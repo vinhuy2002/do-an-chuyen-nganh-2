@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { Login, User } from "../interfaces/user.interface";
 import { AdditionalInfo } from "../interfaces/user.interface";
 import firebase from "../utils/firebase";
 import {v4 as uuidv4} from "uuid";

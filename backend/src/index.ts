@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 const cors = require("cors");
 import userRoute from "./api/routes/user.route";
 import authRoute from "./api/routes/auth.route";
+import categoryRoute from "./api/routes/category.route";
 import * as path from "path"
 import multer from "multer";
 const app = express();
@@ -18,7 +19,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
-
+app.use("/api/category", categoryRoute)
 //Test
 import firebase from "./api/utils/firebase";
 app.get('/listFiles', async (req, res) => {
@@ -31,35 +32,6 @@ app.get('/listFiles', async (req, res) => {
   } catch (error) {
     console.error('Error listing files:', error);
     res.status(500).send('Internal Server Error');
-  }
-});
-app.post('/upload', upload.single('file'), async (req: Request, res: Response) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
-    }
-    const file = firebase.file(req.file.originalname);
-
-    const stream = file.createWriteStream({
-      metadata: {
-        contentType: req.file.mimetype,
-      },
-      resumable: false,
-    });
-
-    stream.on('error', (err) => {
-      console.error(err);
-      res.status(500).json({ error: 'Internal Server Error' });
-    });
-
-    stream.on('finish', () => {
-      res.json({ message: 'File uploaded successfully' });
-    });
-
-    stream.end(req.file.buffer);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
