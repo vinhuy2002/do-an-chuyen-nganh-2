@@ -1,14 +1,16 @@
-import { Image } from "./image.interface";
+
 import { Comment } from "./comment.interface";
 
 export interface Item {
+    id?: number,
     category_id: number,
     item_name: string,
-    description: String,
+    description: string,
     price: number,
     quantity: number,
     option?: string,
-    images: Image,
-    comment: Comment,
-    cart: [],
+    images?: {
+        image_name: any,
+    },
+    comment?: Comment,
 }
