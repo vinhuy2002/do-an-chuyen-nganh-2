@@ -1,5 +1,5 @@
 import { AdditionalInfo } from "../interfaces/user.interface";
-import { delelteUser, getUser, updateInfoUser} from "../services/user.service";
+import { delelteUser, getUser, updateInfoUser } from "../services/user.service";
 import { Request, Response } from "express";
 
 export const getUserInfo = async (req: Request, res: Response) => {
@@ -12,7 +12,7 @@ export const getUserInfo = async (req: Request, res: Response) => {
             }
         )
     } catch (error) {
-        
+
     }
 }
 
@@ -30,14 +30,18 @@ export const updateUserAddtionalInfo = async (req: Request, res: Response) => {
         const updateInfo = await updateInfoUser(additionalInfo);
         res.send(updateInfo);
     } catch (error) {
-        
+
     }
 }
 
-export const deleteUserController = async(req: Request, res: Response) => {
-    const token = res.locals.validToken;
-    const result = await delelteUser(parseInt(token.userid));
-    res.json({
-        Message: result
-    });
+export const deleteUserController = async (req: Request, res: Response) => {
+    try {
+        const token = res.locals.validToken;
+        const result = await delelteUser(parseInt(token.userid));
+        res.json({
+            Message: result
+        });
+    } catch (error) {
+
+    }
 }

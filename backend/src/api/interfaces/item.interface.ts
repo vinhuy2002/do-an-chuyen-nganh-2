@@ -3,6 +3,7 @@ import { Comment } from "./comment.interface";
 
 export interface Item {
     id?: number,
+    user_id: number,
     category_id: number,
     item_name: string,
     description: string,
