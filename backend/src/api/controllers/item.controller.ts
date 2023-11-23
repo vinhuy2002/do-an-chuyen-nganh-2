@@ -29,6 +29,7 @@ export const updateItemController = async (req: Request, res: Response) => {
         const files = req.files as Express.Multer.File[];
         const token = res.locals.validToken;
         const item: Item = {
+            id: parseInt(req.params.id),
             category_id: parseInt(req.body.category_id),
             user_id: token.userid,
             item_name: req.body.item_name,

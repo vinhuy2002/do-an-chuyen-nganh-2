@@ -11,7 +11,7 @@ export interface Item {
     quantity: number,
     option?: string,
     images?: {
-        image_name: any,
+        image_name: any[],
     },
     comment?: Comment,
 }

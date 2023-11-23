@@ -19,7 +19,7 @@ model User {
   phone_number String
   created_time DateTime     @db.DateTime()
   userProfile  UserProfile?
-  recipe       Recipe[]
+  recipet      Recipet[]
   item         Items[]
   commnet      Comment[]
 }
@@ -44,7 +44,7 @@ model Items {
   price       Decimal
   quantity    Int
   option      String?
-  image_name  Json
+  image_name  Json?
   comment     Comment[]
   cart        Cart[]
   category    Category  @relation(fields: [category_id], references: [id])
@@ -66,7 +66,7 @@ model Comment {
   user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
-model Recipe {
+model Recipet {
   id            Int      @id @default(autoincrement())
   user_id       Int
   total_price   Decimal
@@ -77,10 +77,10 @@ model Recipe {
 }
 
 model Cart {
-  id        Int    @id @default(autoincrement())
-  recipe_id Int
-  item_id   Int
-  quantity  Int
-  recipe    Recipe @relation(fields: [recipe_id], references: [id])
-  items     Items  @relation(fields: [item_id], references: [id])
+  id         Int     @id @default(autoincrement())
+  recipet_id Int
+  item_id    Int
+  quantity   Int
+  recipet    Recipet @relation(fields: [recipet_id], references: [id])
+  items      Items   @relation(fields: [item_id], references: [id])
 }

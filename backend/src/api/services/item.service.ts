@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 import firebase from "../utils/firebase";
 import { Item } from "../interfaces/item.interface";
 import { v4 as uuidv4 } from "uuid";
+import { ImgInfo } from "../interfaces/user.interface";
 
 export const getItemService = async (id: any) => {
     try {
@@ -17,28 +18,70 @@ export const getItemService = async (id: any) => {
     }
 }
 
-const checkImgFirebase = (item: Item) => {
-    
+export const getItemByUserSevice = async (id: number) => {
+    try {
+        const data = await prisma.items.findMany({
+            where: {
+                user_id: id
+            }
+        });
+        return data;
+    } catch (error) {
+
+    }
+}
+
+const getItemRestrict = async (itemId: any, userId: number) => {
+    try {
+        const data = await prisma.items.findUnique({
+            where: {
+                id: itemId,
+                user_id: userId
+            }
+        });
+        return data;
+    } catch (error) {
+
+    }
+}
+
+
+const checkImgFirebase = async (item: Item) => {
+    const data = await getItemRestrict(item.id, item.user_id);
+    let arrayImg: any;
+    if (data?.image_name) {
+        arrayImg = data.image_name;
+    }
+    arrayImg.forEach(async (img: any) => {
+        if (!item.images?.image_name.includes(img)) {
+            const file = firebase.file(img);
+            const exists = await file.exists();
+            if (exists[0]) {
+                await file.delete();
+            }
+        }
+    });
     if (!item.images?.image_name) {
         return undefined;
     }
-    item.images.image_name.forEach(async (eachImg: any) => {
-        let check = await firebase.file(eachImg.originalname).exists();
+    item.images.image_name.forEach(async (eachImg: ImgInfo) => {
+        const file = firebase.file(eachImg.originalname);
+        let check = await file.exists();
         if (!check[0]) {
+            console.log("hello");
             const splitname: any = eachImg.originalname.split('.').pop();
             eachImg.originalname = uuidv4() + "." + splitname;
-            const file = firebase.file(eachImg.originalname);
-            const stream = file.createWriteStream({
+            const file1 = firebase.file(eachImg.originalname);
+            const stream = file1.createWriteStream({
                 metadata: {
                     contentType: eachImg.mimetype,
                 },
                 resumable: false,
             });
-
             stream.on('error', (err) => {
                 return false;
             });
-
+    
             stream.on('finish', () => {
                 return true;
             });
@@ -51,8 +94,7 @@ const addImgFirebase = (item: Item) => {
     if (!item.images?.image_name) {
         return undefined;
     }
-
-    item.images.image_name.forEach((eachImg: any) => {
+    item.images.image_name.forEach( async(eachImg: ImgInfo) => {
         const splitname: any = eachImg.originalname.split('.').pop();
         eachImg.originalname = uuidv4() + "." + splitname;
         const file = firebase.file(eachImg.originalname);
@@ -97,12 +139,11 @@ export const addItemService = async (item: Item) => {
 
 export const updateItemService = async (item: Item) => {
     try {
-        const check = await getItemService(item.id);
-        console.log(check);
-        checkImgFirebase(item);
+        await checkImgFirebase(item);
         const data = await prisma.items.update({
             where: {
-                id: item.id
+                id: item.id,
+                user_id: item.user_id
             },
             data: {
                 category_id: item.category_id,
@@ -120,7 +161,7 @@ export const updateItemService = async (item: Item) => {
     }
 }
 
-export const deleteItemService = async(id: number) => {
+export const deleteItemService = async (id: number) => {
     try {
         const data = await prisma.items.delete({
             where: {
@@ -129,28 +170,16 @@ export const deleteItemService = async(id: number) => {
         });
         return data;
     } catch (error) {
-        
+
     }
 }
 
-export const getAllItemService = async() => {
+export const getAllItemService = async () => {
     try {
         const data = await prisma.items.findMany();
         return data;
     } catch (error) {
-        
+
     }
 }
 
-export const getItemByUserSevice = async(id: number) => {
-    try {
-        const data = await prisma.items.findMany({
-            where: {
-                user_id: id
-            }
-        });
-        return data;
-    } catch (error) {
-        
-    }
-}

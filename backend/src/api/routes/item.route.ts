@@ -1,7 +1,7 @@
 import express from "express";
 const route = express.Router();
 import multer from "multer";
-import { addItemController, getItemController, getAllItemController, deleteItemController, getItemByUserController } from "../controllers/item.controller";
+import { addItemController, getItemController, getAllItemController, deleteItemController, getItemByUserController, updateItemController } from "../controllers/item.controller";
 import { checkAccessToken } from "../middlewares/jwt.middleware";
 const upload = multer({
     storage: multer.memoryStorage()
@@ -11,7 +11,7 @@ route.post("/add-item", checkAccessToken, upload.array('photos', 12), addItemCon
 route.get("/:id", getItemController);
 route.get("/", getAllItemController);
 route.get("/item-by-user", checkAccessToken, getItemByUserController);
-// route.post("/update-item", checkAccessToken, upload.array('photos', 12), )
+route.post("/update/:id", checkAccessToken, upload.array('photos', 12), updateItemController);
 route.post("/delete-item/:id", checkAccessToken, deleteItemController);
 
 export default route;
