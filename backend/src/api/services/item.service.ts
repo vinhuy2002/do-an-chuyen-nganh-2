@@ -46,7 +46,18 @@ const getItemRestrict = async (itemId: any, userId: number) => {
 }
 
 
-
+const deleteImgFirebase = async (imgArray: any[] | undefined) => {
+    if (imgArray == undefined) {
+        return;
+    }
+    for (const img of imgArray) {
+        const file = firebase.file(img);
+        const check = await file.exists()
+        if(check[0]) {
+            await file.delete();
+        }
+    }
+}
 
 const checkImgFirebase = async (item: Item) => {
     const data = await getItemRestrict(item.id, item.user_id);
@@ -61,7 +72,6 @@ const checkImgFirebase = async (item: Item) => {
                 const exists = await file.exists();
                 if (exists[0]) {
                     await file.delete();
-                    console.log("Delete");
                 }
             } else
             if (!images.includes(img)) {
@@ -69,7 +79,6 @@ const checkImgFirebase = async (item: Item) => {
                 const exists = await file.exists();
                 if (exists[0]) {
                     await file.delete();
-                    console.log("Delete");
                 }
             }
         }
@@ -156,8 +165,7 @@ export const addItemService = async (item: Item) => {
 
 export const updateItemService = async (item: Item) => {
     try {
-        const tstData = await checkImgFirebase(item);
-        // console.log(tstData?.images?.image_name);
+        await checkImgFirebase(item);
         const data = await prisma.items.update({
             where: {
                 id: item.id,
@@ -179,11 +187,15 @@ export const updateItemService = async (item: Item) => {
     }
 }
 
-export const deleteItemService = async (id: number) => {
+export const deleteItemService = async (id: number, userId: number) => {
     try {
+        const check = await getItemRestrict(id, userId);
+        const arr: any = check?.image_name;
+        await deleteImgFirebase(arr);
         const data = await prisma.items.delete({
             where: {
-                id: id
+                id: id,
+                user_id: userId
             }
         });
         return data;

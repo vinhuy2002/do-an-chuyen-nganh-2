@@ -69,7 +69,8 @@ export const getAllItemController = async(req: Request, res: Response) => {
 export const deleteItemController = async(req: Request, res: Response) => {
     try {
         const {id} = req.params;
-        const deleteItem = await deleteItemService(parseInt(id));
+        const token = res.locals.validToken;
+        const deleteItem = await deleteItemService(parseInt(id), token.userid);
         res.json(deleteItem);
     } catch (error) {
         
