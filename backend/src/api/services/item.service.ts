@@ -46,55 +46,72 @@ const getItemRestrict = async (itemId: any, userId: number) => {
 }
 
 
+
+
 const checkImgFirebase = async (item: Item) => {
     const data = await getItemRestrict(item.id, item.user_id);
     let arrayImg: any;
     if (data?.image_name) {
         arrayImg = data.image_name;
     }
-    arrayImg.forEach(async (img: any) => {
-        if (!item.images?.image_name.includes(img)) {
-            const file = firebase.file(img);
-            const exists = await file.exists();
-            if (exists[0]) {
-                await file.delete();
+    const deleteImg = async (arrayImg: any[], images: ImgInfo[] | undefined) => {
+        for (const img of arrayImg) {
+            if (images == undefined) {
+                const file = firebase.file(img);
+                const exists = await file.exists();
+                if (exists[0]) {
+                    await file.delete();
+                    console.log("Delete");
+                }
+            } else
+            if (!images.includes(img)) {
+                const file = firebase.file(img);
+                const exists = await file.exists();
+                if (exists[0]) {
+                    await file.delete();
+                    console.log("Delete");
+                }
             }
         }
-    });
+    }
     if (!item.images?.image_name) {
         return undefined;
     }
-    item.images.image_name.forEach(async (eachImg: ImgInfo) => {
-        const file = firebase.file(eachImg.originalname);
-        let check = await file.exists();
-        if (!check[0]) {
-            console.log("hello");
-            const splitname: any = eachImg.originalname.split('.').pop();
-            eachImg.originalname = uuidv4() + "." + splitname;
-            const file1 = firebase.file(eachImg.originalname);
-            const stream = file1.createWriteStream({
-                metadata: {
-                    contentType: eachImg.mimetype,
-                },
-                resumable: false,
-            });
-            stream.on('error', (err) => {
-                return false;
-            });
+    await deleteImg(arrayImg, item.images?.image_name)
     
-            stream.on('finish', () => {
-                return true;
-            });
-            stream.end(eachImg.buffer);
+    const processImg = async (images: ImgInfo[]) => {
+        for (const eachImg of images) {
+            const file = firebase.file(eachImg.originalname);
+            let check = await file.exists();
+            if (!check[0]) {
+                const splitname: any = eachImg.originalname.split('.').pop();
+                eachImg.originalname = uuidv4() + "." + splitname;
+                const file1 = firebase.file(eachImg.originalname);
+                const stream = file1.createWriteStream({
+                    metadata: {
+                        contentType: eachImg.mimetype,
+                    },
+                    resumable: false,
+                });
+                stream.on('error', (err) => {
+                    return false;
+                });
+
+                stream.on('finish', () => {
+                    return true;
+                });
+                stream.end(eachImg.buffer);
+            }
         }
-    });
+    }
+    await processImg(item.images.image_name);
 }
 
 const addImgFirebase = (item: Item) => {
     if (!item.images?.image_name) {
         return undefined;
     }
-    item.images.image_name.forEach( async(eachImg: ImgInfo) => {
+    item.images.image_name.forEach(async (eachImg: ImgInfo) => {
         const splitname: any = eachImg.originalname.split('.').pop();
         eachImg.originalname = uuidv4() + "." + splitname;
         const file = firebase.file(eachImg.originalname);
@@ -139,7 +156,8 @@ export const addItemService = async (item: Item) => {
 
 export const updateItemService = async (item: Item) => {
     try {
-        await checkImgFirebase(item);
+        const tstData = await checkImgFirebase(item);
+        // console.log(tstData?.images?.image_name);
         const data = await prisma.items.update({
             where: {
                 id: item.id,
