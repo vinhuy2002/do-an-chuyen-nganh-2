@@ -58,12 +58,13 @@ model Category {
 }
 
 model Comment {
-  id      Int    @id @default(autoincrement())
-  item_id Int
-  user_id Int
-  comment String
-  items   Items  @relation(fields: [item_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id             Int      @id @default(autoincrement())
+  item_id        Int
+  user_id        Int
+  comment        String
+  commented_date DateTime @db.DateTime()
+  items          Items    @relation(fields: [item_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user           User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Recipet {

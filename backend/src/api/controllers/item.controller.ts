@@ -2,6 +2,16 @@ import { Request, Response, NextFunction } from "express";
 import { Item } from "../interfaces/item.interface";
 import { addItemService, getItemService, updateItemService, getAllItemService, deleteItemService, getItemByUserSevice } from "../services/item.service";
 
+export const showImageController = async(req: Request, res: Response) => {
+    try {
+        const {img} = req.params;
+        const showImgURL = "https://firebasestorage.googleapis.com/v0/b/dacn-2.appspot.com/o/" + img + "?alt=media";
+        res.json(showImgURL);
+    } catch (error) {
+        
+    }
+}
+
 export const addItemController = async(req: Request,  res: Response) => {
     try {
         const files = req.files as Express.Multer.File[];
