@@ -10,6 +10,10 @@ export const getItemService = async (id: any) => {
         const data = await prisma.items.findFirst({
             where: {
                 id: id
+            },
+            include: {
+                comment: true,
+                category: true
             }
         });
         return data;

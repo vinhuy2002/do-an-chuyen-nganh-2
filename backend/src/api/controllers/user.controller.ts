@@ -6,11 +6,7 @@ export const getUserInfo = async (req: Request, res: Response) => {
     try {
         const token = res.locals.validToken;
         const data = await getUser(token.userid);
-        res.json(
-            {
-                "Profile": data
-            }
-        )
+        res.json(data)
     } catch (error) {
 
     }
@@ -28,7 +24,7 @@ export const updateUserAddtionalInfo = async (req: Request, res: Response) => {
         }
         console.log(additionalInfo);
         const updateInfo = await updateInfoUser(additionalInfo);
-        res.send(updateInfo);
+        res.json(updateInfo);
     } catch (error) {
 
     }
@@ -38,9 +34,7 @@ export const deleteUserController = async (req: Request, res: Response) => {
     try {
         const token = res.locals.validToken;
         const result = await delelteUser(parseInt(token.userid));
-        res.json({
-            Message: result
-        });
+        res.json(result);
     } catch (error) {
 
     }

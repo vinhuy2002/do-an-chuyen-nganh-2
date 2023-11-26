@@ -59,9 +59,7 @@ export const authRegisterController = async (req: Request, res: Response) => {
             created_time: new Date()
         }
         const result = await authRegister(user);
-        res.json({
-            Message: result,
-        });
+        res.json(result);
     } catch (error) {
 
     }
