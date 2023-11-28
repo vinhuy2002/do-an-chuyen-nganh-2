@@ -19,7 +19,7 @@ model User {
   phone_number String
   created_time DateTime     @db.DateTime()
   userProfile  UserProfile?
-  recipet      Recipet[]
+  receipt      Receipt[]
   item         Items[]
   commnet      Comment[]
 }
@@ -67,21 +67,21 @@ model Comment {
   user           User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
-model Recipet {
-  id            Int      @id @default(autoincrement())
-  user_id       Int
-  total_price   Decimal
-  created_time  DateTime @db.Date
-  finished_time DateTime @db.Date
-  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  cart          Cart[]
+model Receipt {
+  id             Int       @id @default(autoincrement())
+  user_id        Int
+  created_time   DateTime  @db.Date
+  finished_time  DateTime? @db.Date
+  check_finished Boolean   @db.TinyInt
+  user           User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cart           Cart[]
 }
 
 model Cart {
   id         Int     @id @default(autoincrement())
-  recipet_id Int
+  receipt_id Int
   item_id    Int
   quantity   Int
-  recipet    Recipet @relation(fields: [recipet_id], references: [id])
+  receipt    Receipt @relation(fields: [receipt_id], references: [id])
   items      Items   @relation(fields: [item_id], references: [id])
 }
