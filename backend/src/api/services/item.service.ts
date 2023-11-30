@@ -217,3 +217,15 @@ export const getAllItemService = async () => {
     }
 }
 
+export const getItemByCategoryService = async(id: number) => {
+    try {
+        const data = await prisma.items.findMany({
+            where: {
+                category_id: id
+            }
+        });
+        return data;
+    } catch (error) {
+        
+    }
+}

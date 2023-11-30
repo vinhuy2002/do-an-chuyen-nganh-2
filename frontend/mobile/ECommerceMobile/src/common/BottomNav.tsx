@@ -15,7 +15,8 @@ const MyTabs = () => {
                 tabBarLabelStyle: {
                     fontSize: 12
                 },
-                tabBarHideOnKeyboard: true
+                tabBarHideOnKeyboard: true,
+                
             }
         }>
             <Tab.Screen name= 'Home' component={HomeIndex} options={{
@@ -23,6 +24,7 @@ const MyTabs = () => {
                 tabBarIcon: () => (
                     <Icon name="home" size={30} />
                 ),
+                
             }} />
             <Tab.Screen name="Search" component={SearchIndex} options={{
                 tabBarLabel: 'Tìm kiếm',

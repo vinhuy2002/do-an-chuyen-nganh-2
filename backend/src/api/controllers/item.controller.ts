@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { Item } from "../interfaces/item.interface";
-import { addItemService, getItemService, updateItemService, getAllItemService, deleteItemService, getItemByUserSevice } from "../services/item.service";
+import { addItemService, getItemService, updateItemService, getAllItemService, deleteItemService, getItemByUserSevice, getItemByCategoryService } from "../services/item.service";
 
 export const showImageController = async(req: Request, res: Response) => {
     try {
@@ -92,6 +92,16 @@ export const getItemByUserController = async (req: Request, res: Response) => {
         const token = res.locals.validToken;
         const result = await getItemByUserSevice(parseInt(token.user));
         res.json(result);
+    } catch (error) {
+        
+    }
+}
+
+export const getItemByCategoryController = async(req: Request, res: Response) => {
+    try {
+        const {id} = req.params;
+        const data = await getItemByCategoryService(parseInt(id));
+        res.json(data);
     } catch (error) {
         
     }
