@@ -106,6 +106,7 @@ const HomeIndex = () => {
             <Text style={[styles.text, { marginBottom: 5 }]}>Mặt hàng</Text>
             <FlatList
                 style={{ marginBottom: 200 }}
+                columnWrapperStyle={{ flex: 1, justifyContent: "space-around" }}
                 data={item}
                 keyExtractor={item => item.id.toString()}
                 renderItem={({ item }) => <ItemList item={item} />}

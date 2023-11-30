@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         padding: 5,
         margin: 5,
         borderRadius: 5,
-        width: 200,
+        width: 180
     },
     imgStyle: {
         width: "100%", 
