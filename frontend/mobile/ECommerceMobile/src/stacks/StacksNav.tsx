@@ -4,6 +4,8 @@ import HomeIndex from '../pages/home/HomeIndex';
 import ItemDetail from '../pages/home/ItemDetail';
 import MyTabs from '../common/BottomNav';
 import CategoryItem from '../pages/category/CategoryItem';
+import LoginIndex from '../pages/login/LoginIndex';
+import RegisterIndex from '../pages/register/RegisterIndex';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +16,9 @@ const StackNav = () => {
              }}>
                 <Stack.Screen name='Home' component={MyTabs}/>
                 <Stack.Screen name='ItemDetail' component={ItemDetail}/>
-                <Stack.Screen name="CategoryItem" component={CategoryItem}/>
+                <Stack.Screen name='CategoryItem' component={CategoryItem}/>
+                <Stack.Screen name='Login' component={LoginIndex} />
+                <Stack.Screen name='Register' component={RegisterIndex} />
             </Stack.Navigator>
     )
 }

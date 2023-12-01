@@ -7,12 +7,18 @@ import {
     Text,
     useColorScheme,
     View,
+    Button
   } from 'react-native';
 
+  import { useNavigation, useRoute } from '@react-navigation/native';
+
+
 const SettingIndex = () => {
+    const navigation = useNavigation();
     return (
         <View>
-            <Text>Setting Index</Text>
+            <Button title='Đăng nhập' onPress={() => navigation.navigate("Login")} />
+            <Button title='Đăng ký'  onPress={() => navigation.navigate("Register")} />
         </View>
     );
 }

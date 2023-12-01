@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, TouchableOpacity, Image } from "react-native";
+import { View, Text, Button, TouchableOpacity, Image, FlatList, ScrollView } from "react-native";
 import { useNavigation, useRoute, useIsFocused } from '@react-navigation/native';
 import { Item } from "../../interfaces/HomeInterface";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import axios from "axios";
-import {API_HOST} from "@env";
+import { API_HOST } from "@env";
 import styles from "./styles";
 
 const ItemDetail = () => {
@@ -12,32 +12,82 @@ const ItemDetail = () => {
     const route = useRoute();
     const { item } = route.params as { item: Item }
     const [arrImg, setArrImg] = useState<string[]>([]);
+    const [currentImg, setCurrentImg] = useState<any>();
+
     useEffect(() => {
-        item.image_name.map(item => {
-            axios.get(`${API_HOST}/api/item/image/${item}`).then(data => {
-                setArrImg(arrImg => [...arrImg, data.data]);
-            }).catch(err => {
-                console.log(err);
-            })
-        });
+        const fetchData = async () => {
+            const images = await Promise.all(
+                item.image_name.map(async (item) => {
+                    try {
+                        const response = await axios.get(`${API_HOST}/api/item/image/${item}`);
+                        return response.data;
+                    } catch (error) {
+
+                    }
+                })
+            );
+            setArrImg(images.filter((image) => image !== null));
+            setCurrentImg(images[0]);
+        }
+        fetchData();
     }, []);
-    console.log(arrImg);
-    console.log(item.image_name);
-    return (
-        <View>
-            <TouchableOpacity onPress={() => { navigation.goBack() }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', position: 'absolute' }}>
-                    <Icon name="chevron-left" size={50} />
-                    <Text>Quay lại</Text>
+    //Display
+    const DisplayImg = () => {
+        return (
+            <View style={styles.boxSize}>
+                {currentImg != null ? <Image source={{ uri: currentImg }} style={styles.imgDetailStyle} /> : null}
+            </View>
+        );
+    }
+
+    // Carousel
+    const ShowImage = ({ img }: any) => {
+        const eachImg = img;
+        return (
+            <TouchableOpacity onPress={() => {
+                setCurrentImg(img);
+            }}>
+                <View >
+                    <Image source={{ uri: eachImg }} style={styles.imgCarousel} />
                 </View>
             </TouchableOpacity>
-            <View style={{ marginTop: 50 }}>
-                
-                {arrImg.map(data => <Image key={data} source={{ uri: data }} style={styles.imgStyle}/>)}
-                <Text>{item.item_name}</Text>
-                <Text>{item.id}</Text>
-                <Text>{item.description}</Text>
-            </View>
+        )
+    }
+    return (
+        <View style={{ flex: 1 }}>
+            <ScrollView>
+                <View style={{ backgroundColor: "#0077b6" }}>
+                    <TouchableOpacity onPress={() => { navigation.goBack() }} style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#0077b6", width: '35%' }}>
+                        <Icon name="chevron-left" size={50} color={'white'} />
+                        <Text style={{ color: "white", fontWeight: "bold" }}>Quay lại</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{ marginTop: 10, marginLeft: 10, marginRight: 10 }}>
+                    <DisplayImg />
+                    <FlatList
+                        data={arrImg}
+                        keyExtractor={item => item.toString()}
+                        renderItem={({ item }) => <ShowImage img={item} />}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                    />
+                    <View style={{ marginTop: 10 }}>
+                        <View style={{ borderColor: '#dadce0', borderTopWidth: 1, borderBottomWidth: 1 }}>
+                            <Text style={styles.itemName}>{item.item_name}</Text>
+                            <Text style={[styles.itemName]}>Số lượng: {item.quantity}</Text>
+                            <Text style={styles.itemName}>Đơn giá: {item.price} VNĐ</Text>
+                        </View>
+                        <Text style={[styles.itemName, { marginTop: 5 }]}>Thông tin về sản phẩm:</Text>
+                        <Text style={styles.textColor}>{item.description}</Text>
+                    </View>
+                </View>
+            </ScrollView>
+            {/* Footer */}
+            <TouchableOpacity activeOpacity={0.6}>
+                <View style={styles.footerDetail}>
+                    <Text style={styles.footerText}>Thêm vào giỏ hàng</Text>
+                </View>
+            </TouchableOpacity>
         </View>
     );
 }

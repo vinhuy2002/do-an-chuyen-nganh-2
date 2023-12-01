@@ -37,7 +37,7 @@ const ItemList = ({ item }: { item: Item }) => {
     return (
         <TouchableOpacity onPress={() => navigation.navigate('ItemDetail', { item })}>
             <View style={styles.item} >
-                <Image source={{ uri: img }} style={styles.imgStyle} />
+                {img != null ? <Image source={{ uri: img }} style={styles.imgStyle} /> : null}
                 <Text numberOfLines={1} ellipsizeMode="tail">{item.item_name}</Text>
                 <Text>Giá: {item.price} VNĐ</Text>
                 <Text>Số lượng: {item.quantity}</Text>

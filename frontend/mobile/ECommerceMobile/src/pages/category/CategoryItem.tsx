@@ -21,7 +21,7 @@ const ItemList = ({ item }: { item: Item }) => {
     return (
         <TouchableOpacity onPress={() => navigation.navigate('ItemDetail', { item })}>
             <View style={styles.item} >
-                <Image source={{ uri: img }} style={styles.imgStyle} />
+                {img != null ? <Image source={{ uri: img }} style={styles.imgStyle} /> : null}
                 <Text numberOfLines={1} ellipsizeMode="tail">{item.item_name}</Text>
                 <Text>Giá: {item.price} VNĐ</Text>
                 <Text>Số lượng: {item.quantity}</Text>
@@ -43,17 +43,16 @@ const CategoryItem = () => {
         }).catch(error => console.log(error));
     }, []);
     return (
-        <>
-            <TouchableOpacity onPress={() => { navigation.navigate("Home") }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', position: 'absolute' }}>
-                    <Icon name="chevron-left" size={50} />
-                    <Text>Quay lại</Text>
-                </View>
-            </TouchableOpacity>
-            <View style={{ marginTop: 50 }}>
-                <View>
-                    <Text>Mặt Hàng - {cat.category_name}</Text>
-                </View>
+        <View>
+            <View style={{ backgroundColor: "#0077b6" }}>
+                <TouchableOpacity onPress={() => { navigation.goBack() }} style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#0077b6", width: '35%' }}>
+                    <Icon name="chevron-left" size={50} color={'white'} />
+                    <Text style={{ color: "white", fontWeight: "bold" }}>Quay lại</Text>
+                </TouchableOpacity>
+            </View>
+            <Text>Mặt Hàng - {cat.category_name}</Text>
+            <View style={{ marginTop: 10, marginBottom: 150 }}>
+
                 <FlatList
                     data={data}
                     columnWrapperStyle={{ flex: 1, justifyContent: "space-around" }}
@@ -62,7 +61,7 @@ const CategoryItem = () => {
                     numColumns={2}
                 />
             </View>
-        </>
+        </View>
     );
 }
 export default CategoryItem;

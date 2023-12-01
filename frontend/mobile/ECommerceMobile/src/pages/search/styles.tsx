@@ -54,47 +54,6 @@ const styles = StyleSheet.create({
         flexShrink: 1,
         flex: 1, 
         flexWrap: 'wrap'
-    },
-    boxSize: {
-        width: '100%',
-        minHeight: 'auto',
-        padding: 5,
-        borderWidth: 1,
-        marginBottom: 10,
-        borderColor: "#dadce0"
-    },
-    imgDetailStyle: {
-        width: "100%", 
-        height: 300, 
-    },
-    imgCarousel: {
-        width: 75,
-        height: 75,
-        marginRight: 10,
-        padding: 20,
-        borderWidth: 1,
-        borderColor: "#dadce0"
-    },
-    footerDetail: {
-        height: 65,
-        width: '100%',
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#0077b6"
-    },
-    footerText: {
-        color: "white",
-        fontSize: 20,
-        fontWeight: 'bold'
-    },
-    textColor: {
-        color: "black",
-        fontSize: 16
-    },
-    itemName: {
-        color: "black",
-        fontSize: 20,
-        marginBottom: 5
     }
 });
 export default styles;
