@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Button, TouchableOpacity, Image, FlatList, ScrollView } from "react-native";
-import { useNavigation, useRoute, useIsFocused } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Item } from "../../interfaces/HomeInterface";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import axios from "axios";
-import { API_HOST } from "@env";
+import instance from "../../axios/instaces";
 import styles from "./styles";
 
 const ItemDetail = () => {
@@ -19,7 +19,7 @@ const ItemDetail = () => {
             const images = await Promise.all(
                 item.image_name.map(async (item) => {
                     try {
-                        const response = await axios.get(`${API_HOST}/api/item/image/${item}`);
+                        const response = await instance.get(`/item/image/${item}`);
                         return response.data;
                     } catch (error) {
 

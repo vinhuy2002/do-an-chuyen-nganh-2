@@ -10,7 +10,7 @@ export const genAccessToken = async(userInfo: genTokenInfo) => {
         username: userInfo.username,
     },
     process.env.ACCESS_TOKEN_SECRET,
-    {expiresIn: "15m"});
+    {expiresIn: "1h"});
     return accessToken;
 }
 
@@ -20,7 +20,7 @@ export const genRefreshToken = async(userInfo: genTokenInfo) => {
         username: userInfo.username,
     },
     process.env.REFRESH_TOKEN_SECRET,
-    {expiresIn: "1h"});
+    {expiresIn: "12h"});
     return refreshToken;
 }
 

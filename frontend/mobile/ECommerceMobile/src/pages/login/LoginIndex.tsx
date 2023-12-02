@@ -4,16 +4,39 @@ import { useForm, Controller } from "react-hook-form"
 import styles from './styles';
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import { userLogin } from './loginSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { TokenState } from '../../interfaces/LoginInterface';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import instance from '../../axios/instaces';
 const LoginIndex = () => {
     const navigation = useNavigation();
+    const dispatch = useAppDispatch();
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            username: '',
-            password: ''
+            username: 'vinhuy2002',
+            password: 'vinhuy123'
         }
     });
-    const checkData = (data: any) => {
-        console.log(data);
+
+    const loginCheck = async (data: any) => {
+        try {
+            const getData = await instance.post(`/auth/login`, {
+                username: data.username,
+                password: data.password
+            });
+            const token: TokenState = {
+                access_token: getData.data.AccessToken,
+                refresh_token: getData.data.RefreshToken
+            }
+            if (token.access_token != undefined) {
+                dispatch(userLogin(token));
+                navigation.navigate("Home");
+            }
+        } catch (error) {
+            
+        }
     }
     return (
         <ImageBackground source={require('../../assets/images/background.png')} style={styles.container}>
@@ -60,7 +83,7 @@ const LoginIndex = () => {
                 rules={{ required: true }}
             />
             <View style={{ alignItems: 'center' }}>
-                <TouchableOpacity style={styles.button} onPress={handleSubmit(checkData)}>
+                <TouchableOpacity style={styles.button} onPress={handleSubmit(loginCheck)}>
                     <Text style={styles.textStyle}>Đăng nhập</Text>
                 </TouchableOpacity>
             </View>

@@ -4,13 +4,9 @@ import styles from './styles';
 import { useForm, Controller } from "react-hook-form";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 const axios = require('axios').default;
-import { API_HOST } from "@env";
-import ItemDetail from './ItemDetail';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { Category, Item, Categoryname } from "../../interfaces/HomeInterface";
-import MyTabs from '../../common/BottomNav';
+import instance from '../../axios/instaces';
 
 
 const CategoryList = ({ cat }: { cat: Category }) => {
@@ -27,12 +23,15 @@ const ItemList = ({ item }: { item: Item }) => {
     const navigation = useNavigation();
     const [img, setImg] = useState();
     useEffect(() => {
-        axios.get(`${API_HOST}/api/item/image/${item.image_name[0]}`).then((data: any) => {
-            console.log(data.data);
-            setImg(data.data);
-        }).catch((error: any) => {
-            console.log(error);
-        })
+        const getData = async () => {
+            try {
+                const data = await instance.get(`/item/image/${item.image_name[0]}`);
+                setImg(data.data);
+            } catch (error) {
+                
+            }
+        }
+        getData();
     }, []);
     return (
         <TouchableOpacity onPress={() => navigation.navigate('ItemDetail', { item })}>
@@ -55,19 +54,24 @@ const HomeIndex = () => {
         console.log(data.data);
     }
     useEffect(() => {
-        // console.log(API_HOST);
-        axios.get(`${API_HOST}/api/category`).then((data: any) => {
-            setCat(data.data);
-        }).catch((error: any) => {
-            console.log(error);
-        });
-
-        axios.get(`${API_HOST}/api/item`).then((data: any) => {
-            console.log(data.data);
-            setItem(data.data);
-        }).catch((error: any) => {
-            console.log(error);
-        });
+        const getDataCat = async() => {
+            try {
+                const dataCat = await instance.get(`/category`);
+                setCat(dataCat.data);
+            } catch (error) {
+                
+            }
+        }
+        const getDataItem = async() => {
+            try {
+                const dataItem = await instance.get(`/item`);
+                setItem(dataItem.data);
+            } catch (error) {
+                
+            }
+        }
+        getDataCat();
+        getDataItem();
     }, []);
     return (
         <SafeAreaView style={styles.container}>

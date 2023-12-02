@@ -19,7 +19,7 @@ const MyTabs = () => {
                 
             }
         }>
-            <Tab.Screen name= 'Home' component={HomeIndex} options={{
+            <Tab.Screen name= 'HomeIndex' component={HomeIndex} options={{
                 tabBarLabel: 'Trang chủ',
                 tabBarIcon: () => (
                     <Icon name="home" size={30} />

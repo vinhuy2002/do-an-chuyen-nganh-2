@@ -1,10 +1,13 @@
 import React from 'react';
 import { Text, View, TextInput, Button, TouchableOpacity, ImageBackground, ScrollView } from "react-native";
-import { useForm, Controller } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form";
 import styles from './styles';
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from '@react-navigation/native';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
 const LoginIndex = () => {
+    const accessToken  = useAppSelector((state) => state.login.login);
+    console.log("Register Page: ",accessToken); 
     const navigation = useNavigation();
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
