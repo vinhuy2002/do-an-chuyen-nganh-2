@@ -7,7 +7,7 @@ import { launchCamera, launchImageLibrary, ImagePickerResponse } from 'react-nat
 import { useForm, Controller } from "react-hook-form";
 import styles from './styles';
 import { UserProfile } from '../../interfaces/UserInterface';
-
+import DatePicker from 'react-native-date-picker';
 interface ImgProp {
     uri: string
 }
@@ -21,8 +21,9 @@ const AddInformation = () => {
     const [email, setEmail] = useState(profile.email);
     const [phone, setPhone] = useState(profile.phone_number);
     const [address, setAddress] = useState(profile.userProfile?.home_address);
-    const [birthday, setBirthday] = useState(profile.userProfile?.birthday);
+    const [birthday, setBirthday] = useState<any>(new Date(profile.userProfile?.birthday));
     const [img, setImg] = useState<ImagePickerResponse>();
+    // console.log(birthday.toLocalDateString());
     const pickImg = () => {
         launchImageLibrary({
             mediaType: 'photo',
@@ -34,6 +35,9 @@ const AddInformation = () => {
                 setImg(response);
             }
         })
+    }
+    const openModal = () => {
+        setModalVisible(true);
     }
     return (
         <View style={{ backgroundColor: 'white', height: '100%' }}>
@@ -74,7 +78,13 @@ const AddInformation = () => {
                 </View>
                 <View style={styles.updateSetting}>
                     <Text style={{ width: "25%" }}>Ngày sinh</Text>
-                    <TextInput onChangeText={setBirthday} value={birthday} />
+                    <TouchableOpacity onPress={openModal} >
+                        <Text>null</Text>
+                    </TouchableOpacity>
+                    <DatePicker modal open={modalVisible} date={birthday} onDateChange={setBirthday} onConfirm={(date) => { setBirthday(date); setModalVisible(false); }} onCancel={() => {
+                        setModalVisible(false)
+                    }}
+                        mode='date' />
                 </View>
                 <View style={{ alignItems: 'center' }}>
                     <TouchableOpacity style={styles.button}>

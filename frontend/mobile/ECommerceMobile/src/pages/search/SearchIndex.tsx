@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, Text } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 import styles from './styles';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
@@ -7,7 +7,8 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 const SearchIndex = () => {
     const { register, handleSubmit, control } = useForm();
     return (
-        <View>
+        <View style={styles.container}>
+            <Text style={styles.text}>Tìm kiếm</Text>
             <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (

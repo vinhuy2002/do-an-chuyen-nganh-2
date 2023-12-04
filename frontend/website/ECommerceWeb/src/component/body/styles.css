@@ -1,0 +1,42 @@
+.bodyStyle{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.catDisplay{
+    border-width: 1px;
+    border-style: solid;
+    border-color: #dadce0;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 200px;
+    border-radius: 10px;
+}
+.backgroundImg{
+    background-image: url('../../assets/images/Background.jpg');
+    background-repeat: no-repeat;
+    height: 300px;
+    border-radius: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.textStyleTitle{
+    font-weight: bold;
+    color: white;
+    font-size: 30px;
+}
+.wrapper{
+    /* width: 75%; */
+    display: flex;
+    overflow-x: auto;
+}
+.item{
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    text-align: center;
+}
