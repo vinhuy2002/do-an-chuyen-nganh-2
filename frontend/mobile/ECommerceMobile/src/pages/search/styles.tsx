@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     },
     textColor: {
         color: "black",
-        fontSize: 16
+        // fontSize: 16
     },
     itemName: {
         color: "black",

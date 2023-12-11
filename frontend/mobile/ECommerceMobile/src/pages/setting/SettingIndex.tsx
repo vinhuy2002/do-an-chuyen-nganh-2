@@ -26,7 +26,6 @@ const GetUserProfile = () => {
                         'Authorization': 'Bearer ' + token
                     }
                 });
-                console.log(data.data);
                 setProfile(data.data);
                 await getImg();
             } catch (error) {

@@ -36,9 +36,9 @@ const SearchIndex = () => {
             <TouchableOpacity onPress={() => navigation.navigate('ItemDetail', { item })}>
                 <View style={styles.item} >
                     {img != null ? <Image source={{ uri: img }} style={styles.imgStyle} /> : null}
-                    <Text numberOfLines={1} ellipsizeMode="tail">{item.item_name}</Text>
-                    <Text>Giá: {item.price} VNĐ</Text>
-                    <Text>Số lượng: {item.quantity}</Text>
+                    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textColor}>{item.item_name}</Text>
+                    <Text style={styles.textColor}>Giá: {item.price} VNĐ</Text>
+                    <Text style={styles.textColor}>Số lượng: {item.quantity}</Text>
                 </View>
             </TouchableOpacity>
 
@@ -47,7 +47,6 @@ const SearchIndex = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Tìm kiếm</Text>
             <View style={styles.box}>
                 <TextInput
                     style={{ width: '90%' }}
