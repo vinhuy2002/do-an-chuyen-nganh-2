@@ -1,6 +1,16 @@
 import { Request, Response, NextFunction } from "express";
 import { Item } from "../interfaces/item.interface";
-import { addItemService, getItemService, updateItemService, getAllItemService, deleteItemService, getItemByUserSevice, getItemByCategoryService } from "../services/item.service";
+import { addItemService, getItemService, updateItemService, getAllItemService, deleteItemService, getItemByUserSevice, getItemByCategoryService, getItemByNameService } from "../services/item.service";
+
+export const getItemByNameController = async(req: Request, res:Response) => {
+    try {
+        const {name} = req.params;
+        const data = await getItemByNameService(name);
+        res.json(data);
+    } catch (error) {
+        
+    }
+}
 
 export const showImageController = async(req: Request, res: Response) => {
     try {

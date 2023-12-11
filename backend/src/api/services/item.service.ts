@@ -5,6 +5,21 @@ import { Item } from "../interfaces/item.interface";
 import { v4 as uuidv4 } from "uuid";
 import { ImgInfo } from "../interfaces/user.interface";
 
+export const getItemByNameService = async(name: any) => {
+    try {
+        const data = await prisma.items.findMany({
+            where: {
+                item_name: {
+                    contains: name
+                }
+            }
+        });
+        return data;
+    } catch (error) {
+        
+    }
+}
+
 export const getItemService = async (id: any) => {
     try {
         const data = await prisma.items.findFirst({
