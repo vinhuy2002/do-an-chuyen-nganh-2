@@ -30,9 +30,9 @@ const ItemFlatList: React.FC<ItemFlatListProps> = React.memo(({ item }) => {
         <TouchableOpacity onPress={() => navigation.navigate('ItemDetail', { item })}>
             <View style={styles.item}>
                 {img != null ? <Image source={{ uri: img }} style={styles.imgStyle} /> : null}
-                <Text numberOfLines={1} ellipsizeMode="tail">{item.item_name}</Text>
-                <Text>Giá: {item.price} VNĐ</Text>
-                <Text>Số lượng: {item.quantity}</Text>
+                <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textColor}>{item.item_name}</Text>
+                <Text style={styles.textColor}>Giá: {item.price} VNĐ</Text>
+                <Text style={styles.textColor}>Số lượng: {item.quantity}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -44,7 +44,7 @@ const CategoryList = ({ cat }: { cat: Category }) => {
     return (
         <TouchableOpacity onPress={() => navigation.navigate("CategoryItem", { cat })}>
             <View style={styles.boxCategory}>
-                <Text>{cat.category_name}</Text>
+                <Text style={{ color: 'black' }}>{cat.category_name}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -106,7 +106,7 @@ const HomeIndex = () => {
     return (
         <SafeAreaView style={styles.container}>
 
-            <Text style={styles.text}>Khám Phá</Text>
+            
             <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
@@ -139,7 +139,7 @@ const HomeIndex = () => {
             </View>
             <Text style={[styles.text, { marginBottom: 5 }]}>Mặt hàng</Text>
             <FlatList
-                style={{ marginBottom: 200 }}
+                style={{ marginBottom: 170 }}
                 columnWrapperStyle={{ flex: 1, justifyContent: "space-around" }}
                 data={item}
                 keyExtractor={item => item.id.toString()}

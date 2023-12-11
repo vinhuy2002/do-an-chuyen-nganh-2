@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         fontWeight: "bold",
+        color: 'black',
     },
     title: {
         marginTop: 16,
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     },
     textColor: {
         color: "black",
-        fontSize: 16
+        // fontSize: 16
     },
     itemName: {
         color: "black",
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     modalContent: {
         backgroundColor: 'white',
         padding: 16,
-        height: 120,
+        height: 180,
         width: '100%',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,

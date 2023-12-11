@@ -6,6 +6,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Category, Item } from "../../interfaces/HomeInterface";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import instance from "../../axios/instaces";
 
 const ItemList = ({ item }: { item: Item }) => {
     const navigation = useNavigation();
@@ -37,8 +38,7 @@ const CategoryItem = () => {
     const route = useRoute();
     const { cat } = route.params as { cat: Category }
     useEffect(() => {
-        axios.get(`${API_HOST}/api/item/item-by-category/${cat.id}`).then((data) => {
-            console.log(data.data);
+        instance.get(`/item/item-by-category/${cat.id}`).then((data) => {
             setData(data.data);
         }).catch(error => console.log(error));
     }, []);
@@ -50,7 +50,6 @@ const CategoryItem = () => {
                     <Text style={{ color: "white", fontWeight: "bold" }}>Quay lại</Text>
                 </TouchableOpacity>
             </View>
-            <Text>Mặt Hàng - {cat.category_name}</Text>
             <View style={{ marginTop: 10, marginBottom: 150 }}>
 
                 <FlatList

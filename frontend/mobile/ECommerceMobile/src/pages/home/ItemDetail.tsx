@@ -135,30 +135,30 @@ const ItemDetail = () => {
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingEnd: 12, alignItems: 'center' }}>
-                            <Text>Thêm vào giỏ hàng</Text>
+                            <Text style={[styles.textColor, {fontSize: 20}]}>Thêm vào giỏ hàng</Text>
                             <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-                                <Icon1 name="close" size={20} />
+                                <Icon1 name="close" size={20} color={'black'} />
                             </TouchableOpacity>
                         </View>
-                        <View>
-                            <Text>Số lượng trong kho: {item.quantity}</Text>
+                        <View style={{ marginTop: 20, marginBottom: 20 }}>
+                            <Text style={styles.textColor}>Số lượng trong kho: {item.quantity}</Text>
                         </View>
                         <View style={{ width: '100%', justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center' }}>
-                            <View>
-                                <Text>Chọn số lượng: </Text>
+                            <View style={{ marginTop: 10, marginBottom: 10 }}>
+                                <Text style={styles.textColor}>Chọn số lượng: </Text>
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: "#dadce0" }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: "#dadce0", borderRadius: 5 }}>
                                 <View>
                                     <TouchableOpacity onPress={removeQuantity}>
-                                        <Icon1 name="remove" size={30} />
+                                        <Icon1 name="remove" size={30} color={'black'} />
                                     </TouchableOpacity>
                                 </View>
-                                <View>
-                                    <Text>{quantity}</Text>
+                                <View style={{ marginStart: 10, marginEnd: 10 }}>
+                                    <Text style={styles.textColor}>{quantity}</Text>
                                 </View>
                                 <View>
                                     <TouchableOpacity onPress={addQuantity}>
-                                        <Icon1 name="add" size={30} />
+                                        <Icon1 name="add" size={30} color={'black'}/>
                                     </TouchableOpacity>
                                 </View>
                             </View>
