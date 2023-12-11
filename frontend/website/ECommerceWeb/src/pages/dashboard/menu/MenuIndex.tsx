@@ -1,5 +1,4 @@
-
-const MenuIndex = () => {
+const MenuIndex = ({HandleClick}:{HandleClick:(value:string) => void}) => {
     return (
         <div className="bg-white p-2">
             <div>
@@ -7,18 +6,26 @@ const MenuIndex = () => {
             </div>
             <hr className="text-dark" />
             <div className="list-group list-group-flush">
-                <a className="list-group-item list-group-item-action my-2">
+                <button className="list-group-item list-group-item-action my-2"
+                    onClick={() => HandleClick("home")}>
                     <i className="bi bi-speedometer2 fs-6 me-2"></i>
                     <span>Trang chủ</span>
-                </a>
-                <a className="list-group-item py-2">
-                    <i className="bi bi-receipt fs-6 me-2"></i>
-                    <span>Hoá đơn</span>
-                </a>
-                <a className="list-group-item py-2">
-                    <i className="bi bi-cart fs-6 me-2"></i>
-                    <span>Quản lý sản phẩm</span>
-                </a>
+                </button>
+                <button className="list-group-item list-group-item-action my-2"
+                    onClick={() => HandleClick("user")}>
+                    <i className="bi bi-speedometer2 fs-6 me-2"></i>
+                    <span>Người dùng</span>
+                </button>
+                <button className="list-group-item list-group-item-action my-2"
+                    onClick={() => HandleClick("product")}>
+                    <i className="bi bi-speedometer2 fs-6 me-2"></i>
+                    <span>Sản phẩm</span>
+                </button>
+                <button className="list-group-item list-group-item-action my-2"
+                    onClick={() => HandleClick("cart")}>
+                    <i className="bi bi-speedometer2 fs-6 me-2"></i>
+                    <span>Hóa đơn</span>
+                </button>
             </div>
         </div>
     );
