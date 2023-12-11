@@ -1,11 +1,9 @@
 import TopbarIndex from "../topbar/TopbarIndex";
-const Home = ({Toggle}) => {
+const Home = ({Toggle}:{Toggle:string}) => {
     return(
         <div>
             <TopbarIndex Toggle={Toggle}/>
-            <div className="container-fluid">
-                <p>Hello</p>
-            </div>
+            
         </div>
     )
 }
