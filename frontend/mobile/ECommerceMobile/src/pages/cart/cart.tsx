@@ -95,6 +95,17 @@ const styles = StyleSheet.create({
         color: "black",
         fontSize: 20,
         marginBottom: 5
+    },
+    cartStyle:{
+        borderWidth: 1,
+        flexDirection: 'row',
+        borderColor: '#dadce0',
+        marginTop: 5,
+        marginBottom: 5,
+        padding: 5,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        borderRadius: 15
     }
 });
 export default styles;

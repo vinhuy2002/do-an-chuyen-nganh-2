@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, PureComponent } from 'react';
 import { Text, View, TextInput, Button, FlatList, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import { useForm, Controller } from "react-hook-form";
@@ -8,11 +8,41 @@ import { useNavigation } from '@react-navigation/native';
 import { Category, Item, Categoryname } from "../../interfaces/HomeInterface";
 import instance from '../../axios/instaces';
 
+interface ItemFlatListProps {
+    item: Item,
+}
+const ItemFlatList: React.FC<ItemFlatListProps> = React.memo(({ item }) => {
+    const navigation = useNavigation();
+    const [img, setImg] = useState<any>(null);
 
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                const data = await instance.get(`/item/image/${item.image_name[0]}`);
+                setImg(data.data);
+            } catch (error) {
+            }
+        };
+        getData();
+    }, [item]);
+
+    return (
+        <TouchableOpacity onPress={() => navigation.navigate('ItemDetail', { item })}>
+            <View style={styles.item}>
+                {img != null ? <Image source={{ uri: img }} style={styles.imgStyle} /> : null}
+                <Text numberOfLines={1} ellipsizeMode="tail">{item.item_name}</Text>
+                <Text>Giá: {item.price} VNĐ</Text>
+                <Text>Số lượng: {item.quantity}</Text>
+            </View>
+        </TouchableOpacity>
+    );
+}, (prevProps, nextProps) => {
+    return prevProps.item.id === nextProps.item.id;
+});
 const CategoryList = ({ cat }: { cat: Category }) => {
     const navigation = useNavigation();
     return (
-        <TouchableOpacity onPress={() =>navigation.navigate("CategoryItem", {cat})}>
+        <TouchableOpacity onPress={() => navigation.navigate("CategoryItem", { cat })}>
             <View style={styles.boxCategory}>
                 <Text>{cat.category_name}</Text>
             </View>
@@ -28,7 +58,7 @@ const ItemList = ({ item }: { item: Item }) => {
                 const data = await instance.get(`/item/image/${item.image_name[0]}`);
                 setImg(data.data);
             } catch (error) {
-                
+
             }
         }
         getData();
@@ -54,20 +84,20 @@ const HomeIndex = () => {
         console.log(data.data);
     }
     useEffect(() => {
-        const getDataCat = async() => {
+        const getDataCat = async () => {
             try {
                 const dataCat = await instance.get(`/category`);
                 setCat(dataCat.data);
             } catch (error) {
-                
+
             }
         }
-        const getDataItem = async() => {
+        const getDataItem = async () => {
             try {
                 const dataItem = await instance.get(`/item`);
                 setItem(dataItem.data);
             } catch (error) {
-                
+
             }
         }
         getDataCat();
@@ -113,7 +143,7 @@ const HomeIndex = () => {
                 columnWrapperStyle={{ flex: 1, justifyContent: "space-around" }}
                 data={item}
                 keyExtractor={item => item.id.toString()}
-                renderItem={({ item }) => <ItemList item={item} />}
+                renderItem={({ item }) => <ItemFlatList item={item} />}
                 numColumns={2}
             />
         </SafeAreaView>

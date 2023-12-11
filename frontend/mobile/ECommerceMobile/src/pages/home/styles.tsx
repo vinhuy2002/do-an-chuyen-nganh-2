@@ -47,12 +47,12 @@ const styles = StyleSheet.create({
         width: 180
     },
     imgStyle: {
-        width: "100%", 
-        height: 200, 
+        width: "100%",
+        height: 200,
     },
     itemTitle: {
         flexShrink: 1,
-        flex: 1, 
+        flex: 1,
         flexWrap: 'wrap'
     },
     boxSize: {
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
         borderColor: "#dadce0"
     },
     imgDetailStyle: {
-        width: "100%", 
-        height: 300, 
+        width: "100%",
+        height: 300,
     },
     imgCarousel: {
         width: 75,
@@ -95,6 +95,20 @@ const styles = StyleSheet.create({
         color: "black",
         fontSize: 20,
         marginBottom: 5
-    }
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        padding: 16,
+        height: 120,
+        width: '100%',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+      },
 });
 export default styles;

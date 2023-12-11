@@ -31,6 +31,20 @@ const createReceipt = async (cart: Cart) => {
     }
 };
 
+const checkReceiptById = async (id: number) => {
+    try {
+        const data = await prisma.receipt.findFirst({
+            where: {
+                user_id: id,
+                check_finished: false,
+            },
+        });
+        return data;
+    } catch (error) {
+        
+    }
+}
+
 const addItemToCart = async (receipt_id: number, cart: Cart) => {
     try {
         const data = await prisma.cart.create({
@@ -74,5 +88,25 @@ export const deleteCartItemService = async (detailCart: DetailCart) => {
         return data;
     } catch (error) {
         throw new Error();
+    }
+}
+
+export const getCartItemService = async(userid: number) => {
+    try {
+        const checkReciept = await checkReceiptById(userid);
+        if(!checkReceipt) {
+            // throw new Error('No matching receipt found for deletion');
+            // return null;
+        }
+        const getCartItem = await prisma.cart.findMany({
+            where: {
+                receipt_id: checkReciept?.id
+            }, include: {
+                items: true
+            }
+        });
+        return getCartItem;
+    } catch (error) {
+        
     }
 }
