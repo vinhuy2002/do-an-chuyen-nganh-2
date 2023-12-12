@@ -165,6 +165,7 @@ const addImgFirebase = (item: Item) => {
 export const addItemService = async (item: Item) => {
     try {
         addImgFirebase(item);
+        console.log(item);
         const addItem = await prisma.items.create({
             data: {
                 category_id: item.category_id,
@@ -176,6 +177,7 @@ export const addItemService = async (item: Item) => {
                 image_name: item.images?.image_name.map((obj: any) => obj.originalname)
             }
         });
+        console.log(addItem);
         return addItem;
     } catch (error) {
 
@@ -196,7 +198,6 @@ export const updateItemService = async (item: Item) => {
                 description: item.description,
                 price: item.price,
                 quantity: item.quantity,
-                option: item.option,
                 image_name: item.images?.image_name.map((obj: any) => obj.originalname),
             }
         });

@@ -23,13 +23,12 @@ const ItemList = ({ item }: { item: Item }) => {
         <TouchableOpacity onPress={() => navigation.navigate('ItemDetail', { item })}>
             <View style={styles.item} >
                 {img != null ? <Image source={{ uri: img }} style={styles.imgStyle} /> : null}
-                <Text numberOfLines={1} ellipsizeMode="tail">{item.item_name}</Text>
-                <Text>Giá: {item.price} VNĐ</Text>
-                <Text>Số lượng: {item.quantity}</Text>
+                <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textColor}>{item.item_name}</Text>
+                <Text style={styles.textColor}>Giá: {item.price} VNĐ</Text>
+                <Text style={styles.textColor}>Số lượng: {item.quantity}</Text>
             </View>
         </TouchableOpacity>
-
-    )
+    );
 }
 
 const CategoryItem = () => {
@@ -50,7 +49,7 @@ const CategoryItem = () => {
                     <Text style={{ color: "white", fontWeight: "bold" }}>Quay lại</Text>
                 </TouchableOpacity>
             </View>
-            <View style={{ marginTop: 10, marginBottom: 150 }}>
+            <View style={{ marginTop: 10, marginBottom: 130 }}>
 
                 <FlatList
                     data={data}

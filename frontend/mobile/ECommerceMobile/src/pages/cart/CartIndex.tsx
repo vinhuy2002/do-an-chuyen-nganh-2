@@ -10,14 +10,18 @@ import {
     useColorScheme,
     View,
     Dimensions,
-    Animated,
     TouchableOpacity
 } from 'react-native';
 import styles from './cart';
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import instance from '../../axios/instaces';
 import { CartItemDetail } from '../../interfaces/CartInterface';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { GestureDetector, Gesture } from 'react-native-gesture-handler';
+import Animated, {
+    useSharedValue,
+    useAnimatedStyle,
+    withSpring,
+} from 'react-native-reanimated';
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -35,35 +39,15 @@ class CartItemFlatList extends PureComponent<CartItemFlatListProps>{
                 </View>
             )
         }
-        const leftSwipe = (dragX) => {
-            const scale = dragX.interpolate({
-                inputRange: [0, 100],
-                outputRange: [0, 1],
-                extrapolate: 'clamp',
-            });
-            return (
-
-                <TouchableOpacity activeOpacity={0.6}>
-                    <View>
-                        <Animated.Text style={{ transform: [{ scale: scale }] }}>
-                            Delete
-                        </Animated.Text>
-                    </View>
-                </TouchableOpacity>
-
-            );
-        };
         return (
-            // <Swipeable renderLeftActions={leftSwipe}>
-            <View style={styles.cartStyle}>
-                <Image source={{ uri: img }} style={{ width: 50, height: 50, borderRadius: 5, paddingLeft: 20 }} />
-                <View style={{ marginStart: 10 }}>
-                    <Text style={styles.textColor}>{item.items.item_name}</Text>
-                    <Text style={styles.textColor}>Số lượng: {item.quantity}</Text>
-                    <Text style={styles.textColor}>Đơn giá: {item.items.price} VNĐ</Text>
-                </View>
-            </View>
-            // </Swipeable>
+                    <View style={styles.cartStyle}>
+                        <Image source={{ uri: img }} style={{ width: 50, height: 50, borderRadius: 5, paddingLeft: 20 }} />
+                        <View style={{ marginStart: 10 }}>
+                            <Text style={styles.textColor}>{item.items.item_name}</Text>
+                            <Text style={styles.textColor}>Số lượng: {item.quantity}</Text>
+                            <Text style={styles.textColor}>Đơn giá: {item.items.price} VNĐ</Text>
+                        </View>
+                    </View>
         );
     }
 }
@@ -108,9 +92,9 @@ const CartIndex = () => {
                             <Text style={styles.textColor}>Thành tiền: </Text>
                             <Text style={styles.textColor}>{totalPrice} VNĐ</Text>
                         </View>
-                        <View style={{ flex: 1, flexDirection: 'column', alignItems:'flex-end'}}>
+                        <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-end' }}>
                             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', width: 'auto', paddingEnd: 10, borderTopRightRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#0077b6" }}>
-                                <Icon name='done' size={30} color={'white'}/>
+                                <Icon name='done' size={30} color={'white'} />
                                 <Text style={{ color: 'white' }}>Thanh toán</Text>
                             </View>
                         </View>

@@ -39,11 +39,10 @@ model Items {
   category_id Int
   user_id     Int
   user        User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  item_name   String
-  description String
+  item_name   String    @db.LongText
+  description String    @db.LongText
   price       Decimal
   quantity    Int
-  option      String?
   image_name  Json?
   comment     Comment[]
   cart        Cart[]
@@ -61,7 +60,7 @@ model Comment {
   id             Int      @id @default(autoincrement())
   item_id        Int
   user_id        Int
-  comment        String
+  comment        String   @db.LongText
   commented_date DateTime @db.DateTime()
   items          Items    @relation(fields: [item_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   user           User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
