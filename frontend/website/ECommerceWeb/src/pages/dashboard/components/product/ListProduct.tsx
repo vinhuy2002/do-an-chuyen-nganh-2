@@ -10,7 +10,6 @@ const ListProduct = ({Action} : {Action:(value:string) => void}) => {
             productName: 'Đèn thông minh Sonic',
             description: 'Đèn thông minh',
             price: '3 $',
-            userId: '1',
         },
         {
             id: 2,
@@ -18,7 +17,6 @@ const ListProduct = ({Action} : {Action:(value:string) => void}) => {
             productName: 'TV Samsung',
             description: 'TV đến từ nhãn hàng Nhật Bản',
             price: '20 $',
-            userId: '3',
         },
         {
             id: 3,
@@ -26,7 +24,6 @@ const ListProduct = ({Action} : {Action:(value:string) => void}) => {
             productName: 'Camera Sakuaya',
             description: 'Camera full HD, bắt được âm thanh',
             price: '15 $',
-            userId: '5',
         },
         {
             id: 4,
@@ -34,7 +31,6 @@ const ListProduct = ({Action} : {Action:(value:string) => void}) => {
             productName: 'Camera Sakuaya',
             description: 'Camera full HD, bắt được âm thanh',
             price: '15 $',
-            userId: '5',
         },
     ];
 
@@ -63,11 +59,6 @@ const ListProduct = ({Action} : {Action:(value:string) => void}) => {
             title: 'Giá',
             dataIndex: 'price',
             key: 'price',
-        },
-        {
-            title: 'Người bán',
-            dataIndex: 'userId',
-            key: 'userId',
         },
         {
             title: 'Action',

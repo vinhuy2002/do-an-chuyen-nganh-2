@@ -1,7 +1,6 @@
 import TopbarIndex from "../../topbar/TopbarIndex";
 import { useState } from "react";
-import CreateUser from "./CreateUser";
-import ListUser from "./ListUser";
+import InforUser from "./InforUser";
 import UpdateUser from "./UpdateUser";
 
 
@@ -16,11 +15,8 @@ const Home = ({ Toggle }: { Toggle: string }) => {
             <TopbarIndex Toggle={Toggle} />
             <h2>Quản lý người dùng</h2>
             {"" === action ? (
-                <ListUser Action={Action}/>
-            ) 
-            : "createUser" === action ? (
-                <CreateUser Action={Action}/>
-            ) 
+                <InforUser Action={Action}/>
+            )
             : "updateUser" === action ? (
                 <UpdateUser Action={Action}/>
             )
