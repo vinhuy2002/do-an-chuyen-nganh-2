@@ -2,6 +2,7 @@ import { useState } from "react";
 import Home from "./components/Home";
 import MenuIndex from "./menu/MenuIndex";
 import HomeUser from "./components/user/HomeUser";
+import HomeProduct from "./components/product/HomeProduct";
 
 const Dashboard = () => {
   const [toggle, setToggle] = useState("home");
@@ -24,7 +25,7 @@ const Dashboard = () => {
             )
           : "product" === toggle ? 
             (
-              <p>hello product</p>
+              <HomeProduct Toggle={toggle}/>
             )
           : "cart" === toggle ? 
             (

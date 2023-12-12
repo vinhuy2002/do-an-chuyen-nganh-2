@@ -24,7 +24,7 @@ const Home = ({ Toggle }: { Toggle: string }) => {
             : "updateUser" === action ? (
                 <UpdateUser Action={Action}/>
             )
-            : (<p>delete</p>)}
+            : (<p>delete button in user clicked</p>)}
 
         </div>
     )
