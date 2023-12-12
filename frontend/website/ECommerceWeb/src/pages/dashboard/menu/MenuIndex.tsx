@@ -13,17 +13,17 @@ const MenuIndex = ({HandleClick}:{HandleClick:(value:string) => void}) => {
                 </button>
                 <button className="list-group-item list-group-item-action my-2"
                     onClick={() => HandleClick("user")}>
-                    <i className="bi bi-speedometer2 fs-6 me-2"></i>
-                    <span>Người dùng</span>
+                    <i className="bi bi-person fs-6 me-2"></i>
+                    <span>Cá nhân</span>
                 </button>
                 <button className="list-group-item list-group-item-action my-2"
                     onClick={() => HandleClick("product")}>
-                    <i className="bi bi-speedometer2 fs-6 me-2"></i>
+                    <i className="bi bi-box-seam fs-6 me-2"></i>
                     <span>Sản phẩm</span>
                 </button>
                 <button className="list-group-item list-group-item-action my-2"
                     onClick={() => HandleClick("cart")}>
-                    <i className="bi bi-speedometer2 fs-6 me-2"></i>
+                    <i className="bi bi-bag fs-6 me-2"></i>
                     <span>Hóa đơn</span>
                 </button>
             </div>

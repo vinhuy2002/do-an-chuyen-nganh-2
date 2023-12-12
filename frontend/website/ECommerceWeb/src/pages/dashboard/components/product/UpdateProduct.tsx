@@ -53,20 +53,6 @@ const UpdateProduct = ({ Action }: { Action: (value: string) => void }) => {
 
                     <div className="row mt-4">
                         <div className="col-3">
-                            <label htmlFor="category">Người bán</label>
-                        </div>
-                        <div className="col">
-                            <select className="form-select">
-                                <option>Lựa chọn người bán</option>
-                                <option value="1" selected>1</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="row mt-4">
-                        <div className="col-3">
                             <label htmlFor="category">Hình ảnh sản phẩm</label>
                         </div>
                         <div className="col">

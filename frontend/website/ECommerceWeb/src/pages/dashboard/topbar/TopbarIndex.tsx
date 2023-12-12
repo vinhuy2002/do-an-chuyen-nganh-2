@@ -23,7 +23,7 @@ const TopbarIndex = ({Toggle}) => {
                             data-bs-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
-                        >Xin chào, Vĩnh Uy</a>
+                        >Xin chào, Quang Hải</a>
                         <div className="dropdown-menu" aria-labelledby="dropdownId">
                             <a className="dropdown-item pe-0" href="#">Đăng xuất</a>
                         </div>
