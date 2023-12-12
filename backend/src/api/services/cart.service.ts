@@ -2,6 +2,8 @@ import { Cart, DetailCart } from '../interfaces/cart.interface';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
+
+
 const checkReceipt = async (cart: Cart) => {
     try {
         const data = await prisma.receipt.findFirst({
@@ -39,6 +41,7 @@ const checkReceiptById = async (id: number) => {
                 check_finished: false,
             },
         });
+        // console.log(data);
         return data;
     } catch (error) {
         
@@ -74,14 +77,14 @@ export const addCartItemService = async (cart: Cart) => {
 
 export const deleteCartItemService = async (detailCart: DetailCart) => {
     try {
-        const checkReceiptData = await checkReceipt(detailCart);
-        if (!checkReceiptData) {
+        const checkReceiptData1 = await checkReceipt(detailCart);
+        if (!checkReceiptData1) {
             throw new Error('No matching receipt found for deletion');
         }
         const data = await prisma.cart.delete({
             where: {
                 id: detailCart.id,
-                receipt_id: checkReceiptData.id,
+                receipt_id: checkReceiptData1.id,
                 item_id: detailCart.item_id
             }
         });
@@ -93,19 +96,38 @@ export const deleteCartItemService = async (detailCart: DetailCart) => {
 
 export const getCartItemService = async(userid: number) => {
     try {
-        const checkReciept = await checkReceiptById(userid);
-        if(!checkReceipt) {
-            // throw new Error('No matching receipt found for deletion');
-            // return null;
+        const checkRecieptData1 = await checkReceiptById(userid);
+        if (!checkRecieptData1) {
+            return null;
         }
         const getCartItem = await prisma.cart.findMany({
             where: {
-                receipt_id: checkReciept?.id
+                receipt_id: checkRecieptData1?.id,
+                
             }, include: {
                 items: true
             }
         });
         return getCartItem;
+    } catch (error) {
+        
+    }
+}
+
+export const checkoutService = async(userid: number) => {
+    try {
+        const checkReciept = await checkReceiptById(userid);
+        const checkout = await prisma.receipt.update({
+            where: {
+                id: checkReciept?.id,
+                user_id: userid,
+                check_finished: false,
+            }, data: {
+                check_finished: true,
+                finished_time: new Date(),
+            }
+        });
+        return checkout;
     } catch (error) {
         
     }

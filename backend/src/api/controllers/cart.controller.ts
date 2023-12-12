@@ -1,6 +1,17 @@
 import { Request, Response } from "express"
 import { Cart, DetailCart } from "../interfaces/cart.interface";
-import { addCartItemService, deleteCartItemService, getCartItemService } from "../services/cart.service";
+import { addCartItemService, deleteCartItemService, getCartItemService, checkoutService } from "../services/cart.service";
+
+export const checkoutController = async(req: Request, res: Response) => {
+    try {
+        const token = res.locals.validToken;
+        console.log("Thanh coong");
+        const data = await checkoutService(token.userid);
+        res.json(data);
+    } catch (error) {
+        
+    }
+}
 
 export const addCartItemController = async(req: Request, res: Response) => {
     try {

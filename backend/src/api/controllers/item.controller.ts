@@ -38,6 +38,7 @@ export const addItemController = async(req: Request,  res: Response) => {
             },
         }
         const data = await addItemService(item);
+        console.log(item);
         res.json(data);
     } catch (error) {
         
