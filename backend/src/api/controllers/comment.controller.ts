@@ -1,6 +1,6 @@
 import express, {Request, Response, NextFunction} from "express";
-import { Comment } from "../interfaces/comment.interface";
-import { addCommentService, getCommentService } from "../services/comment.service";
+import { Comment, DeleteComment } from "../interfaces/comment.interface";
+import { addCommentService, getCommentService, deleteCommentService, getCommentByIdService } from "../services/comment.service";
 
 export const addCommentController = async (req: Request, res: Response) => {
     try {
@@ -18,6 +18,21 @@ export const addCommentController = async (req: Request, res: Response) => {
     }
 }
 
+export const deleteCommentController = async(req: Request, res: Response) => {
+    try {
+        const token = res.locals.validToken;
+        const deleteComment: DeleteComment = {
+            id: req.body.id,
+            item_id: req.body.id,
+            user_id: token.userid
+        }
+        const data = await deleteCommentService(deleteComment);
+        res.json(data);
+    } catch (error) {
+        
+    }
+}
+
 export const getCommentController = async (req: Request, res: Response) => {
     try {
         const {item_id} = req.params;
@@ -25,5 +40,15 @@ export const getCommentController = async (req: Request, res: Response) => {
         res.json(data);
     } catch (error) {
 
+    }
+}
+
+export const getCommentByIdController = async (req: Request, res: Response) => {
+    try {
+        const token = res.locals.validToken; 
+        const data = await getCommentByIdService(token.userid);
+        res.json(data);
+    } catch (error) {
+        
     }
 }
