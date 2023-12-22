@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { Comment } from "../interfaces/comment.interface";
+import { Comment, DeleteComment } from "../interfaces/comment.interface";
 const prisma = new PrismaClient();
 
 export const addCommentService = async (comment: Comment) => {
@@ -23,6 +23,34 @@ export const getCommentService =async (item_id: number) => {
         const data = await prisma.comment.findMany({
             where: {
                 item_id: item_id
+            }
+        });
+        return data;
+    } catch (error) {
+        
+    }
+}
+
+export const deleteCommentService = async(deleteComment: DeleteComment) => {
+    try {
+        const data = await prisma.comment.delete({
+            where: {
+                id: deleteComment.id,
+                user_id: deleteComment.user_id,
+                item_id: deleteComment.item_id,
+            }
+        });
+        return data;
+    } catch (error) {
+        
+    }
+}
+
+export const getCommentByIdService = async(user_id: number) => {
+    try {
+        const data = await prisma.comment.findMany({
+            where: {
+                user_id: user_id
             }
         });
         return data;

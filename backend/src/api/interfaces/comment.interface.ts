@@ -4,3 +4,9 @@ export interface Comment{
     comment: string,
     commented_date: Date
 }
+
+export interface DeleteComment{
+    id: number,
+    item_id: number,
+    user_id: number,
+}

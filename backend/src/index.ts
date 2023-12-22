@@ -8,6 +8,7 @@ import categoryRoute from "./api/routes/category.route";
 import itemRoute from "./api/routes/item.route";
 import cartRoute from "./api/routes/cart.route"
 import receiptRoute from "./api/routes/receipt.route";
+import commentRoute from "./api/routes/comment.route";
 const app = express();
 
 require("dotenv").config();
@@ -23,6 +24,7 @@ app.use("/api/category", categoryRoute);
 app.use("/api/item", itemRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/receipt", receiptRoute);
+app.use("/api/comment", commentRoute);
 
 app.listen(process.env.HOST_PORT, () => {
   console.log(`Running on http://localhost:${process.env.HOST_PORT}`);
