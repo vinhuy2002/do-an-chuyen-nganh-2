@@ -16,6 +16,9 @@ export const updateUserAddtionalInfo = async (req: Request, res: Response) => {
     try {
         const token = res.locals.validToken;
         const additionalInfo: AdditionalInfo = {
+            name: req.body.name,
+            email: req.body.email,
+            phone_number: req.body.phone_number,
             user_id: token.userid,
             seller: parseInt(req.body.seller),
             profile_img: req.file,

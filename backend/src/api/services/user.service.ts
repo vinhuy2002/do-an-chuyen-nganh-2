@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { AdditionalInfo } from "../interfaces/user.interface";
 import firebase from "../utils/firebase";
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 const prisma = new PrismaClient();
 
 const checkUserId = async (userId: number) => {
@@ -15,14 +15,14 @@ const checkUserId = async (userId: number) => {
 const deleteImgFirebase = async (additionalInfo: AdditionalInfo) => {
     try {
         const imgName = await prisma.userProfile.findFirst({
-            where:{
+            where: {
                 id: additionalInfo.user_id
             },
             select: {
                 profile_img: true
             }
         });
-        if (!imgName?.profile_img){
+        if (!imgName?.profile_img) {
             return;
         }
         const file = firebase.file(imgName.profile_img);
@@ -33,15 +33,15 @@ const deleteImgFirebase = async (additionalInfo: AdditionalInfo) => {
         }
         return;
     } catch (error) {
-        
+
     }
 }
 
 const addImgFirebase = (additionalInfo: AdditionalInfo) => {
-    if (!additionalInfo.profile_img){
+    if (!additionalInfo.profile_img) {
         return undefined;
     }
-    const splitName = additionalInfo.profile_img.originalname.split('.').pop(); 
+    const splitName = additionalInfo.profile_img.originalname.split('.').pop();
     additionalInfo.profile_img.originalname = uuidv4() + "." + splitName;
     const file = firebase.file(additionalInfo.profile_img.originalname);
     const stream = file.createWriteStream({
@@ -91,15 +91,22 @@ export const updateInfoUser = async (additionalInfo: AdditionalInfo) => {
         if (check != null) {
             await deleteImgFirebase(additionalInfo);
             addImgFirebase(additionalInfo);
-            const updateInfo = await prisma.userProfile.update({
+            const updateInfo = await prisma.user.update({
                 where: {
-                    user_id: additionalInfo.user_id
+                    id: additionalInfo.user_id
                 },
                 data: {
-                    seller: additionalInfo.seller,
-                    profile_img: additionalInfo.profile_img?.originalname,
-                    home_address: additionalInfo.home_address,
-                    birthday: additionalInfo.birthday
+                    name: additionalInfo.name,
+                    email: additionalInfo.email,
+                    phone_number: additionalInfo.phone_number,
+                    userProfile: {
+                        update: {
+                            seller: additionalInfo.seller,
+                            profile_img: additionalInfo.profile_img?.originalname,
+                            home_address: additionalInfo.home_address,
+                            birthday: additionalInfo.birthday
+                        }
+                    }
                 }
             });
             return updateInfo;
