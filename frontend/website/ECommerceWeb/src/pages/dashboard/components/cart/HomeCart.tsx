@@ -1,6 +1,7 @@
 import TopbarIndex from "../../topbar/TopbarIndex";
 import { useState } from "react";
 import ListCart from "./ListCart";
+import DetailCart from "./DetailCart";
 
 const HomeCart = ({ Toggle }: { Toggle: string }) => {
     const [action, setAction] = useState("");
@@ -15,7 +16,7 @@ const HomeCart = ({ Toggle }: { Toggle: string }) => {
             {"" === action ? (
                 <ListCart Action={Action}/>
             ) 
-            : (<p>delete button clicked</p>)
+            : (<DetailCart Action={Action}/>)
             }
         </div>
     )

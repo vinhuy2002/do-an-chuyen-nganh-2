@@ -40,3 +40,12 @@
     border: 1px solid black;
     text-align: center;
 }
+
+
+/* product detail */
+.bigImg {
+    width: 100%;
+    height: 80vh;
+    border: 0.5px solid lightgrey;
+    border-radius: 10px;
+}
