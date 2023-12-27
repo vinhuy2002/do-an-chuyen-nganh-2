@@ -42,6 +42,9 @@ export const getItemByUserSevice = async (id: number) => {
         const data = await prisma.items.findMany({
             where: {
                 user_id: id
+            },
+            include: {
+                category: true
             }
         });
         return data;
@@ -56,8 +59,10 @@ const getItemRestrict = async (itemId: any, userId: number) => {
             where: {
                 id: itemId,
                 user_id: userId
-            }
+            }, 
+            
         });
+        console.log(data);
         return data;
     } catch (error) {
 
@@ -215,9 +220,10 @@ export const deleteItemService = async (id: number, userId: number) => {
         const data = await prisma.items.delete({
             where: {
                 id: id,
-                user_id: userId
+                user_id: userId,
             }
         });
+        console.log(id);
         return data;
     } catch (error) {
 

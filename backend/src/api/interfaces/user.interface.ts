@@ -19,6 +19,9 @@ export interface genTokenInfo {
 }
 
 export interface AdditionalInfo {
+    name: string,
+    email: string,
+    phone_number: string,
     user_id: number,
     seller?: number,
     profile_img?: ImgInfo,

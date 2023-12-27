@@ -98,21 +98,21 @@ export const deleteItemController = async(req: Request, res: Response) => {
     }
 }
 
-export const getItemByUserController = async (req: Request, res: Response) => {
-    try {
-        const token = res.locals.validToken;
-        const result = await getItemByUserSevice(parseInt(token.user));
-        res.json(result);
-    } catch (error) {
-        
-    }
-}
-
 export const getItemByCategoryController = async(req: Request, res: Response) => {
     try {
         const {id} = req.params;
         const data = await getItemByCategoryService(parseInt(id));
         res.json(data);
+    } catch (error) {
+        
+    }
+}
+
+export const getItemByUserController = async (req: Request, res: Response) => {
+    try {
+        const token = res.locals.validToken;
+        const result = await getItemByUserSevice(parseInt(token.userid));
+        res.json(result);
     } catch (error) {
         
     }

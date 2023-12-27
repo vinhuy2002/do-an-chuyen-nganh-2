@@ -1,8 +1,36 @@
 import { Button } from "antd";
-
-
+import { useEffect, useState } from "react";
+import { useAppSelector, useAppDispatch } from "../../../../app/hooks";
+import instance from "../../../../axios/instance";
+import { UserProfile } from "../../../../interfaces/interfaces";
 const InforUser = ({ Action }: { Action: (value: string) => void }) => {
+    const token = useAppSelector((state) => state.login.access_token);
+    const [profile, setProfile] = useState<UserProfile>();
+    const [img, setImg] = useState<any>();
+    useEffect(() => {
+        const getProfile = async () => {
+            try {
+                const data = await instance.get('user/profile', {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+                setProfile(data.data);
+                await getImg();
+            } catch (error) {
 
+            }
+        }
+        const getImg = async () => {
+            try {
+                const img = await instance.get(`/item/image/${profile?.userProfile?.profile_img}`);
+                setImg(img.data);
+            } catch (error) {
+
+            }
+        }
+        getProfile();
+    })
     return (
         <div>
             <div className="container-fluid" style={{ marginBottom: '20px' }}>
@@ -15,7 +43,7 @@ const InforUser = ({ Action }: { Action: (value: string) => void }) => {
                             </div>
                             <div className="col">
                                 <input type="text" name="name" readOnly
-                                    className="form-control" value={'Quang Hải'} />
+                                    className="form-control" value={profile?.name} />
                             </div>
                         </div>
 
@@ -25,7 +53,7 @@ const InforUser = ({ Action }: { Action: (value: string) => void }) => {
                             </div>
                             <div className="col">
                                 <input type="text" name="email" readOnly
-                                    className="form-control" value={'quanghai@gmail.com'} />
+                                    className="form-control" value={profile?.email} />
                             </div>
                         </div>
 
@@ -35,7 +63,7 @@ const InforUser = ({ Action }: { Action: (value: string) => void }) => {
                             </div>
                             <div className="col">
                                 <input type="text" name="phone" readOnly
-                                    className="form-control" value={'0123456789'} />
+                                    className="form-control" value={profile?.phone_number} />
                             </div>
                         </div>
 
@@ -45,7 +73,7 @@ const InforUser = ({ Action }: { Action: (value: string) => void }) => {
                             </div>
                             <div className="col">
                                 <input type="text" name="address" readOnly
-                                    className="form-control" value={'Đà Nẵng'} />
+                                    className="form-control" value={profile?.userProfile?.home_address} />
                             </div>
                         </div>
 
@@ -55,7 +83,7 @@ const InforUser = ({ Action }: { Action: (value: string) => void }) => {
                             </div>
                             <div className="col">
                                 <input type="text" name="address" readOnly
-                                    className="form-control" value={'07-12-2002'} />
+                                    className="form-control" value={profile?.userProfile?.birthday} />
                             </div>
                         </div>
 
