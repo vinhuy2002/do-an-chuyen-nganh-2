@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Button, Space, Table } from "antd";
 
 const ListCart = ({ Action }: { Action: (value: string) => void }) => {
     //table
@@ -66,16 +66,15 @@ const ListCart = ({ Action }: { Action: (value: string) => void }) => {
             dataIndex: 'totalPrice',
             key: 'totalPrice',
         },
-        // {
-        //     title: 'Action',
-        //     key: 'id',
-        //     render: () => (
-        //         <Space size="middle">
-        //             <Button type="primary" onClick={() => Action('updateProduct')}>Cập nhật</Button>
-        //             <Button type="primary" onClick={() => Action('deleteProduct')} danger>Xóa</Button>
-        //         </Space>
-        //     ),
-        // },
+        {
+            title: 'Action',
+            key: 'id',
+            render: () => (
+                <Space size="middle">
+                    <Button type="primary" onClick={() => Action('detailCart')}>Chi tiết</Button>
+                </Space>
+            ),
+        },
     ];
 
     return (
