@@ -6,8 +6,40 @@ import NavItem from 'react-bootstrap/NavItem';
 import NavLink from 'react-bootstrap/NavLink';
 import './styles.css';
 import { Link } from 'react-router-dom';
-
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useEffect, useState } from 'react';
+import instance from '../../axios/instance';
+import { UserProfile } from '../../interfaces/interfaces';
+// import { Link, useNavigate } from 'react-router-dom';
 function Header() {
+    const [profile, setProfile] = useState<UserProfile>();
+    const [img, setImg] = useState<any>();
+    // const [user, setUser] = useState(false);
+    const token = useAppSelector((state) => state.login.access_token);
+    useEffect(() => {
+        const getProfile = async () => {
+            try {
+                const data = await instance.get('user/profile', {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+                setProfile(data.data);
+                await getImg();
+            } catch (error) {
+
+            }
+        }
+        const getImg = async () => {
+            try {
+                const img = await instance.get(`/item/image/${profile?.userProfile?.profile_img}`);
+                setImg(img.data);
+            } catch (error) {
+
+            }
+        }
+        getProfile();
+    }, []);
     return (
         <Navbar expand="lg" className='background'>
             <Container>
@@ -31,10 +63,16 @@ function Header() {
                             </Dropdown.Menu>
                         </Dropdown>
                     </Nav>
-                    <Nav className='ms-auto'>
+                    {!profile ? <Nav className='ms-auto'>
                         <Nav.Item className='mx-3'><Link to="../login" className='textStyleLink'>Đăng nhập</Link></Nav.Item>
                         <Nav.Item className='mx-3'><Link to="../register" className='textStyleLink'>Đăng ký</Link></Nav.Item>
-                    </Nav>
+                    </Nav> : <Dropdown as={NavItem} className='ms-auto'>
+                        <Dropdown.Toggle as={NavLink} style={{ color: 'white' }}>{profile.name}</Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item><Link to="../dashboard" >Dashboard</Link></Dropdown.Item>
+                            <Dropdown.Item>Đăng xuất</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>}    
                 </Navbar.Collapse>
             </Container>
         </Navbar>

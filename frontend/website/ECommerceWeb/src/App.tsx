@@ -3,6 +3,7 @@ import Footer from './component/footer/Footer';
 import Body from './component/body/Body';
 import ProductDetail from './component/body/productDetail';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
 function App() {
   return (
     <div>
