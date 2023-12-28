@@ -5,8 +5,12 @@ import DetailCart from "./DetailCart";
 
 const HomeCart = ({ Toggle }: { Toggle: string }) => {
     const [action, setAction] = useState("");
-    const Action = (value: string) => {
+    const [selectedData, setSelectedData] = useState<any | null>(null);
+    const Action = (value: string, data?: any) => {
         setAction(value);
+        if (data) {
+            setSelectedData(data);
+        }
     }
     
     return (
@@ -16,7 +20,7 @@ const HomeCart = ({ Toggle }: { Toggle: string }) => {
             {"" === action ? (
                 <ListCart Action={Action}/>
             ) 
-            : (<DetailCart Action={Action}/>)
+            : (<DetailCart Action={Action} data={selectedData}/>)
             }
         </div>
     )

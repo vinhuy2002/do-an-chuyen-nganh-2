@@ -1,5 +1,21 @@
+import { useEffect, useState } from 'react';
 import './styles.css';
+import instance from '../../axios/instance';
+import { Link } from 'react-router-dom';
 const Body = () => {
+    const [data, setData] = useState<any[]>();
+    useEffect(() => {
+        const getItem = async () => {
+            try {
+                const response = await instance.get(`item/all`);
+                setData(response.data);
+            } catch (error) {
+
+            }
+        }
+        getItem();
+    }, []);
+    console.log(data);
     return (
         <div className='bodyStyle mt-3'>
             <div className="container">
@@ -49,14 +65,19 @@ const Body = () => {
                     <h3>Sản phẩm</h3>
                 </div>
                 <div className='row mt-3 row-cols-6'>
-                    <div className="col catDisplay ms-3 me-3 mb-3 ">Column</div>
-                    <div className="col catDisplay ms-3 me-3 mb-3 ">Column</div>
-                    <div className="col catDisplay ms-3 me-3 mb-3 ">Column</div>
-                    <div className="col catDisplay ms-3 me-3 mb-3 ">Column</div>
-                    <div className="col catDisplay ms-3 me-3 mb-3 ">Column</div>
-                    <div className="col catDisplay ms-3 me-3 mb-3 ">Column</div>
-                    <div className="col catDisplay ms-3 me-3 mb-3 ">Column</div>
-                    <div className="col catDisplay ms-3 me-3 mb-3 ">Column</div>
+                    {data ? data.map((item) => {
+                        const imgURL = `https://firebasestorage.googleapis.com/v0/b/dacn-2.appspot.com/o/${item.image_name[0]}?alt=media`
+                        return (
+                            <Link to={`/detail/${item.id}`} className="col ms-3 me-3 mb-3 productStyle textNoStyle">
+                                <div>
+                                    <img src={imgURL} alt={item.item_name} style={{ width: 200, height: 200, objectFit: 'cover', borderRadius: 10 }} />
+                                </div>
+                                <div className='textName'>{item.item_name}</div>
+                                <div>Đơn giá: {item.price} VNĐ</div>
+                                <div>Số lượng: {item.quantity}</div>
+                            </Link>
+                        )
+                    }) : <div className="col catDisplay ms-3 me-3 mb-3 "></div>}
                 </div>
             </div>
         </div>

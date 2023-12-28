@@ -1,42 +1,35 @@
 import { Button, Space, Table } from "antd";
 
 
-const DetailCart = ({Action} : {Action:(value:string) => void}) => {
+const DetailCart = ({Action, data} : {Action:(value:string) => void, data: any}) => {
 
-    const dataSource = [
-        {
-            productName: 'Đèn Led thông minh Sakura',
-            productImg: 'img',
-            count: '4',
-            price: '36 $',
-        },
-        {
-            productName: 'TV Panasonic',
-            productImg: 'img',
-            count: '1',
-            price: '50 $',
-        },
-    ];
-
+    const dataSource = data?.cart || [];
+    console.log(dataSource[0].items.item_name);
     const columns = [
         {
             title: 'Tên sản phẩm',
-            dataIndex: 'productName',
-            key: 'productName',
+            dataIndex: ['items', 'item_name'],
+            key: 'name',
         },
         {
             title: 'Hình ảnh',
-            dataIndex: 'productImg',
+            dataIndex: ['items', 'image_name', 0],
             key: 'productImg',
+            render: (img: string) => {
+                const imgURL = `https://firebasestorage.googleapis.com/v0/b/dacn-2.appspot.com/o/${img}?alt=media`;
+                return(
+                    <img src={imgURL} alt="product" style={{ width: '50px' }} />
+                )
+            },
         },
         {
             title: 'Số lượng',
-            dataIndex: 'count',
+            dataIndex: 'quantity',
             key: 'count',
         },
         {
             title: 'Đơn giá',
-            dataIndex: 'price',
+            dataIndex: ['items', 'price'],
             key: 'price',
         },
     ];
