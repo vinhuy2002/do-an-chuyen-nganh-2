@@ -1,6 +1,27 @@
 import { Button, Space, Table } from "antd";
+import { useEffect, useState } from "react";
+import instance from "../../../../axios/instance";
+import { useAppSelector } from "../../../../app/hooks";
 
-const ListCart = ({ Action }: { Action: (value: string) => void }) => {
+const ListCart = ({ Action }: { Action: (value: string, data?: any) => void }) => {
+    const [data, setData] = useState<any[]>();
+    const token = useAppSelector(state => state.login.access_token);
+    useEffect(() => {
+        const getData = async() => {
+            try {
+                const response = await instance.get(`receipt/user`, {headers: 
+                    {
+                        Authorization: "Bearer " + token
+                    }
+                });
+                setData(response.data);
+
+            } catch (error) {
+                
+            }
+        }
+        getData();
+    }, []);
     //table
     const dataSource = [
         {
@@ -39,7 +60,7 @@ const ListCart = ({ Action }: { Action: (value: string) => void }) => {
             totalPrice: '136 $',
         },
     ];
-
+    console.log(data);
     const columns = [
         {
             title: 'Id',
@@ -48,30 +69,50 @@ const ListCart = ({ Action }: { Action: (value: string) => void }) => {
         },
         {
             title: 'Ngày tạo',
-            dataIndex: 'createTime',
-            key: 'createTime',
+            dataIndex: 'created_time',
+            key: 'created_time',
         },
         {
             title: 'Tình trạng',
-            dataIndex: 'finished',
-            key: 'finished',
+            dataIndex: 'check_finished',
+            key: 'check_finished',
+            render: (check_finished) => {
+                if (check_finished === true) {
+                    return (
+                        <p>Đã hoàn thành</p>
+                    )
+                }
+                return (
+                    <p>Chưa hoàn thành</p>
+                )
+            }
         },
         {
             title: 'Ngày hoàn thành',
-            dataIndex: 'finishedTime',
-            key: 'finishedTime',
+            dataIndex: 'finished_time',
+            key: 'finished_time',
         },
         {
             title: 'Tổng giá',
-            dataIndex: 'totalPrice',
-            key: 'totalPrice',
+            dataIndex: 'cart',
+            key: 'cart',
+            render: (cart) => {
+                let value: number = 0;
+                cart.map((item) => {
+                    value += (item.quantity * item.items.price); 
+                });
+                return (
+                    <p>{value} VNĐ</p>
+                )
+            }
         },
         {
             title: 'Action',
+            dataIndex: 'cart',
             key: 'id',
-            render: () => (
+            render: (cart: any, record: any) => (
                 <Space size="middle">
-                    <Button type="primary" onClick={() => Action('detailCart')}>Chi tiết</Button>
+                    <Button type="primary" onClick={() => Action('detailCart', { cart, record })}>Chi tiết</Button>
                 </Space>
             ),
         },
@@ -81,7 +122,7 @@ const ListCart = ({ Action }: { Action: (value: string) => void }) => {
         <div>
            <div className="container-fluid" style={{marginBottom:'20px'}}>
                 <h4 className="text-center">Danh sách hóa đơn</h4>
-                <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 5 }} />
+                <Table dataSource={data} columns={columns} pagination={{ pageSize: 5 }} />
             </div>
 
         </div>
