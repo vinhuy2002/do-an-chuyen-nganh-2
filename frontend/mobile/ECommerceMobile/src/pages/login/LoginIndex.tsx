@@ -15,8 +15,8 @@ const LoginIndex = () => {
     const dispatch = useAppDispatch();
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            username: 'vinhuy2002',
-            password: 'vinhuy123'
+            username: '',
+            password: ''
         }
     });
 

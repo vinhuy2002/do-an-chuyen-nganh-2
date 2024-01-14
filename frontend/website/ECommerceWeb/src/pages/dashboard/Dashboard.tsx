@@ -18,7 +18,7 @@ const Dashboard = () => {
         </div>}
         <div className="col">
           {"home" === toggle ? (
-              <Home Toggle={toggle}/>
+              <HomeUser Toggle={toggle}/>
             ) 
           : "user" === toggle ?
             (

@@ -15,21 +15,22 @@ const ItemFlatList: React.FC<ItemFlatListProps> = React.memo(({ item }) => {
     const navigation = useNavigation();
     const [img, setImg] = useState<any>(null);
 
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const data = await instance.get(`/item/image/${item.image_name[0]}`);
-                setImg(data.data);
-            } catch (error) {
-            }
-        };
-        getData();
-    }, [item]);
-
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         try {
+    //             const data = await instance.get(`/item/image/${item.image_name[0]}`);
+    //             setImg(data.data);
+    //         } catch (error) {
+    //         }
+    //     };
+    //     getData();
+    // }, [item]);
+    const test =`https://firebasestorage.googleapis.com/v0/b/dacn-2.appspot.com/o/${item.image_name[0]}alt=media`;
+    console.log(test);
     return (
         <TouchableOpacity onPress={() => navigation.navigate('ItemDetail', { item })}>
             <View style={styles.item}>
-                {img != null ? <Image source={{ uri: img }} style={styles.imgStyle} /> : null}
+                {/* {test != null ? <Image source={{ uri: test }} style={styles.imgStyle} /> : null} */}
                 <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textColor}>{item.item_name}</Text>
                 <Text style={styles.textColor}>Giá: {item.price} VNĐ</Text>
                 <Text style={styles.textColor}>Số lượng: {item.quantity}</Text>
@@ -63,10 +64,12 @@ const ItemList = ({ item }: { item: Item }) => {
         }
         getData();
     }, []);
+    const test =`https://firebasestorage.googleapis.com/v0/b/dacn-2.appspot.com/o/${item.image_name[0]}alt=media`;
+    console.log(test);
     return (
         <TouchableOpacity onPress={() => navigation.navigate('ItemDetail', { item })}>
             <View style={styles.item} >
-                {img != null ? <Image source={{ uri: img }} style={styles.imgStyle} /> : null}
+                {/* {img != null ? <Image source={{ uri: test }} style={styles.imgStyle} /> : null} */}
                 <Text numberOfLines={1} ellipsizeMode="tail">{item.item_name}</Text>
                 <Text>Giá: {item.price} VNĐ</Text>
                 <Text>Số lượng: {item.quantity}</Text>
@@ -105,8 +108,6 @@ const HomeIndex = () => {
     }, []);
     return (
         <SafeAreaView style={styles.container}>
-
-            
             <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
@@ -143,7 +144,7 @@ const HomeIndex = () => {
                 columnWrapperStyle={{ flex: 1, justifyContent: "space-around" }}
                 data={item}
                 keyExtractor={item => item.id.toString()}
-                renderItem={({ item }) => <ItemFlatList item={item} />}
+                renderItem={({ item }) => <ItemList item={item} />}
                 numColumns={2}
             />
         </SafeAreaView>

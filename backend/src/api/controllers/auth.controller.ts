@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Login, User, genTokenInfo } from "../interfaces/user.interface";
-import { authCheckMail, authLogin, authLogout, authRegister, authUpdatePassword } from "../services/auth.service";
+import { authCheckMail, authLogin, authRegister, authUpdatePassword } from "../services/auth.service";
 import { genAccessToken, genRefreshToken, genResetToken } from "../utils/jwttoken";
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -68,10 +68,10 @@ export const authRegisterController = async (req: Request, res: Response) => {
 export const authLogoutController = async (req: Request, res: Response) => {
     try {
         const refreshToken = req.body.refreshToken;
-        await authLogout(refreshToken);
-        res.json({
-            Message: "Đăng xuất thành công!"
-        });
+        // await authLogout(refreshToken);
+        // res.json({
+        //     Message: "Đăng xuất thành công!"
+        // });
     } catch (error) {
 
     }
